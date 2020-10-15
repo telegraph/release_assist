@@ -4,7 +4,7 @@ const axios = require('axios');
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-async function run(): Promise<void> {
+async function run() {
   try {
     const url: string = core.getInput('url');
     core.info('Sending POST request...');
