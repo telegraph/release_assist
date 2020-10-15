@@ -1,11 +1,18 @@
 #!/usr/bin/env node
 
+const axios = require('axios');
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-try {
-    core.setOutput("label", github.context.payload.label.name)
-    core.setOutput("pr_body", github.context.payload.pull_request.body);
-} catch (error) {
+async function run(): Promise<void> {
+  try {
+    const url: string = core.getInput('url');
+    core.info('Sending POST request...');
+    const data = JSON.parse(core.getInput('data'));
+    await axios.post(url, data);
+  } catch (error) {
     core.setFailed(error.message);
+  }
 }
+
+run()

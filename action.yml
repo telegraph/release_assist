@@ -1,0 +1,12 @@
+name: 'Webhook POST Action'
+inputs:
+  url:
+    description: 'URL of webhook to send post request to'
+    required: true
+  data:
+    description: 'JSON string of data to pass into request'
+    default: '{}'
+    required: false
+runs:
+  using: 'node12'
+  main: 'index.js'
