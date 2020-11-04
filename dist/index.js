@@ -11,6 +11,7 @@ const core = __webpack_require__(127);
 const github = __webpack_require__(134);
 
 try {
+    console.log(github.context)
     core.setOutput("label", github.context.payload.label.name)
     core.setOutput("pr_body", github.context.payload.pull_request.body);
 } catch (error) {
