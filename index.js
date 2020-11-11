@@ -6,11 +6,11 @@ const github = require('@actions/github');
 
 async function run() {
   try {
+    const data = {}
     const url = core.getInput('url');
-    core.info('Sending POST request...');
-    const data = JSON.parse(core.getInput('data'));
-    const team_name = core.getInput('team');
     
+    
+    const team_name = core.getInput('team_name');
     if (team_name != null) {
       data.team_name = team_name
     }
