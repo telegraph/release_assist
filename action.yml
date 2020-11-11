@@ -1,5 +1,8 @@
 name: 'Webhook POST Action'
 inputs:
+  team:
+    description: 'team name, sent in request body'
+    required: false
   url:
     description: 'URL of webhook to send post request to'
     required: true
