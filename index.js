@@ -9,12 +9,12 @@ async function run() {
     const data = {}
     const url = core.getInput('url');
     
-    # extract optional inputs and add them to POST request body
+    // extract optional inputs and add them to POST request body
     inputs = ['team', 'project_name', 'release_version', 'release_description']
     inputs.forEach(function(elem) {
        const val = core.getInput(elem);
        if (val != null && val != "") {
-         data[elem] = val
+         data[elem] = val;
        }
     });
     
