@@ -7,5 +7,5 @@
 
 # Build 
 
-$ npm i -g @vercel/ncc
+$ npm i -g @vercel/ncc  
 $ ncc build index.js --license licenses.txt
