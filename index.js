@@ -10,7 +10,7 @@ async function run() {
     core.info('Sending POST request...');
     const data = JSON.parse(core.getInput('data'));
     console.log(data)
-    await axios.post(url, {});
+    await axios.post(url, data);
   } catch (error) {
     core.setFailed(error.message);
   }
