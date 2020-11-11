@@ -9,6 +9,12 @@ async function run() {
     const url = core.getInput('url');
     core.info('Sending POST request...');
     const data = JSON.parse(core.getInput('data'));
+    const team_name = core.getInput('team');
+    
+    if (team != null} {
+      data.team = team_name
+    }
+    
     console.log(data)
     await axios.post(url, data);
   } catch (error) {
