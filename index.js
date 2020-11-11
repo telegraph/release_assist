@@ -12,7 +12,7 @@ async function run() {
     const team_name = core.getInput('team');
     
     if (team_name != null) {
-      data.team = team_name
+      data.team_name = team_name
     }
     
     console.log(data)
