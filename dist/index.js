@@ -12,10 +12,9 @@ const github = __webpack_require__(134);
 
 try {
     core.setOutput("label", github.context.payload.label.name)
-    core.setOutput("pr_body", github.context.payload.pull_request.body);
-    
+    core.setOutput("project_name", github.context.payload.repository.name);
     // extract optional fields from PR body 
-    ks = ["team_name", "release_description"];	    
+    ks = ["team_name", "release_description", "release_version"];	    
     ks.forEach(function(elem) {
 	let re = new RegExp(`<!##(${elem})([\\\s\\\S]*?)##end`);
 	res = github.context.payload.pull_request.body.match(re);
