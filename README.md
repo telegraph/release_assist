@@ -2,4 +2,5 @@
 
 # NOTE: this is a public repository
 
-### Simple custom action to extract some details from PR for release automation.
+### Collection of github actions used for release automation, actions are on branches.
+
