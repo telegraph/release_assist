@@ -5,6 +5,8 @@ outputs:
     description: 'The comment of the PR'
   label:
     description: 'The name of the label applied to the PR'
+  team_name:
+    description: 'Team name opening PR'
 runs:
   using: 'node12'
   main: 'dist/index.js'
