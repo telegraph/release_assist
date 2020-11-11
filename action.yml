@@ -1,6 +1,6 @@
 name: 'Webhook POST Action'
 inputs:
-  team:
+  team_name:
     description: 'team name, sent in request body'
     required: false
   project_name:
