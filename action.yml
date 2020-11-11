@@ -3,13 +3,19 @@ inputs:
   team:
     description: 'team name, sent in request body'
     required: false
+  project_name:
+    description: 'name of the github project'
+    required: false
+  release_version:
+    description: 'version of the releaase'
+    required: false
+  release_description:
+    required: false
+    description: 'description of the release goes here'
   url:
     description: 'URL of webhook to send post request to'
     required: true
-  data:
-    description: 'JSON string of data to pass into request'
-    default: '{}'
-    required: false
+
 runs:
   using: 'node12'
   main: 'index.js'
