@@ -11,7 +11,7 @@ async function run() {
     const data = JSON.parse(core.getInput('data'));
     const team_name = core.getInput('team');
     
-    if (team != null} {
+    if (team != null) {
       data.team = team_name
     }
     
