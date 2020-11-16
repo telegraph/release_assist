@@ -9,7 +9,7 @@ try {
     // extract optional fields from PR body 
     ks = ["team_name", "release_description", "release_version"];	    
     ks.forEach(function(elem) {
-	    let re = new RegExp(`<!##(${elem})([\\\s\\\S]*?)##end`);
+	    let re = new RegExp(`<\s*?(${elem})\s*?>([\\\s\\\S]*?)<\/\s*?${elem}>\s*?`);
 	    res = github.context.payload.pull_request.body.match(re);
         if (res != null) {
 	       core.setOutput(res[1], res[2].replace(/[\n\r]+/g, ' '))	
