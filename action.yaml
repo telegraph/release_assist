@@ -11,6 +11,8 @@ outputs:
     description: 'Release description'
   release_version:
     description: 'The version of the release to start'
+  pr_link:
+    description: 'Link to the PR'
 runs:
   using: 'node12'
   main: 'dist/index.js'
