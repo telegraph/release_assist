@@ -25,7 +25,7 @@ async function run() {
     const url = core.getInput('url');
     
     // extract optional inputs and add them to POST request body
-    inputs = ['team_name', 'project_name', 'release_version', 'release_description']
+    inputs = ['team_name', 'project_name', 'release_version', 'release_description', 'pr_link']
     inputs.forEach(function(elem) {
        const val = core.getInput(elem);
        if (val != null && val != "") {
