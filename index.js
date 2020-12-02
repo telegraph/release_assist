@@ -3,13 +3,13 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
+console.log("printing pr info")
+console.log(github.context.payload)
+console.log(github.context.payload.pull_request)
+console.log(github.context.payload.pull_request.html_url)
 try {
     core.setOutput("label", github.context.payload.label.name)
     core.setOutput("project_name", github.context.payload.repository.name);
-	
-    console.log("payload = " + github.context.payload)
-    console.log("pull_request = " + github.context.payload.pull_request)
-    console.log("pull_request url = " + github.context.payload.pull_request.html_url)
 	
     // extract optional fields from PR body 
     ks = ["team_name", "release_description", "release_version"];	    
