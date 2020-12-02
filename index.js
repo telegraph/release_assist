@@ -10,7 +10,10 @@ console.log(github.context.payload.pull_request.html_url);
 try {
     core.setOutput("label", github.context.payload.label.name);
     core.setOutput("project_name", github.context.payload.repository.name);
-	  core.setOutput("pr_link", github.context.payload.pull_request.html_url);
+    core.setOutput("pr_link", github.context.payload.pull_request.html_url);
+    console.log("printing pr_link");
+    console.log(github.context.payload.pull_request.html_url);
+
     // extract optional fields from PR body 
     ks = ["team_name", "release_description", "release_version"];	    
     ks.forEach(function(elem) {
