@@ -3,10 +3,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-console.log("printing pr info");
-console.log(github.context.payload);
-console.log(github.context.payload.pull_request);
-console.log(github.context.payload.pull_request.html_url);
+
 try {
     core.setOutput("label", github.context.payload.label.name);
     core.setOutput("project_name", github.context.payload.repository.name);
