@@ -13,8 +13,8 @@ const github = __webpack_require__(134);
 try {
     core.setOutput("label", github.context.payload.label.name)
     core.setOutput("project_name", github.context.payload.repository.name);
-	console.log("printing payload")
-	console.log(github.context.payload)
+	  console.log("printing payload");
+	  console.log(github.context.payload);
     // extract optional fields from PR body 
     ks = ["team_name", "release_description", "release_version"];	    
     ks.forEach(function(elem) {
