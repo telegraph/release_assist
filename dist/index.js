@@ -14,6 +14,7 @@ try {
     core.setOutput("label", github.context.payload.label.name)
     core.setOutput("project_name", github.context.payload.repository.name);
     core.setOutput("pr_link", github.context.payload.pull_request.html_url);
+    core.setOutput("original_ticket", github.context.payload.pull_request.head.ref);
 
     // extract optional fields from PR body 
     ks = ["team_name", "release_description", "release_version"];	    
