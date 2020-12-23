@@ -1,24 +1,45 @@
-#!/usr/bin/env node
-
 const core = require('@actions/core');
 const github = require('@actions/github');
 
+async function run() {
+  try {
 
-try {
-    core.setOutput("label", github.context.payload.label.name);
-    core.setOutput("project_name", github.context.payload.repository.name);
-    core.setOutput("pr_link", github.context.payload.pull_request.html_url);
-    core.setOutput("original_ticket", github.context.payload.pull_request.head.ref);
+    core.info('running')
+    const token = core.getInput('repo-token');
 
-    // extract optional fields from PR body 
-    ks = ["team_name", "release_description", "release_version"];	    
-    ks.forEach(function(elem) {
-	    let re = new RegExp(`<\s*?(${elem})\s*?>([\\\s\\\S]*?)<\/\s*?${elem}>\s*?`);
-	    res = github.context.payload.pull_request.body.match(re);
-        if (res != null) {
-	       core.setOutput(res[1], res[2].replace(/[\n\r]+/g, ' '))	
-	    }
-    });	
-} catch (error) {
-    core.setFailed(error.message);
+    core.info("token: " +  token);
+       
+    const octokit = github.getOctokit(token);
+
+    const response = await octokit.request('GET /repos/{owner}/{repo}/releases', {
+      owner: github.context.payload.repository.owner.login,
+      repo: github.context.payload.repository.name
+    });
+
+    if (response.status !== 200) {
+      const error = 'failed to retrieve releases. response.status: ' + response.status + ' response.data: ' + response.data
+      core.error(error);
+      core.setFailed(error);
+      return;
+    }
+
+    let releaseVersion;
+    let releaseNotes;
+    if (response.data.length > 0) {
+      releaseVersion = response.data[0].tag_name;
+      releaseNotes = response.data[0].body;
+    } else {
+      core.warning('no release found');
+      releaseVersion = 'N/A';
+      releaseNotes = 'No release found';
+    }
+
+    core.setOutput('releaseVersion', releaseVersion);
+    core.setOutput('releaseNotes', releaseNotes);
+
+  } catch (error) {
+      core.setFailed(error.message);
+  }
 }
+
+run();
