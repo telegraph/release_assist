@@ -1,41 +1,32 @@
 const core = require('@actions/core');
-const github = require('@actions/github');
+const { extractPullRequestCommits, updatePullRequest } = require('./pullRequest');
+const { getMostRecentRelease, createDraftRelease } = require('./release');
+const { getNextReleaseNumber, generateChangelog } = require('./util');
 
 async function run() {
   try {
+    core.info('running');
 
-    core.info('running')
-    const token = core.getInput('repo-token');
+    const commits = await extractPullRequestCommits();
+    const releaseNotes = generateChangelog(commits);
+    core.info('releaseNotes: \n' + releaseNotes);
 
-    core.info("token: " +  token);
-       
-    const octokit = github.getOctokit(token);
+    const latestRelease = await getMostRecentRelease();
 
-    const response = await octokit.request('GET /repos/{owner}/{repo}/releases', {
-      owner: github.context.payload.repository.owner.login,
-      repo: github.context.payload.repository.name
-    });
-
-    if (response.status !== 200) {
-      const error = 'failed to retrieve releases. response.status: ' + response.status + ' response.data: ' + response.data
-      core.error(error);
-      core.setFailed(error);
-      return;
-    }
-
-    let releaseVersion;
-    let releaseNotes;
-    if (response.data.length > 0) {
-      releaseVersion = response.data[0].tag_name;
-      releaseNotes = response.data[0].body;
+    let releaseNumber = 'v1.0.0';
+    if (latestRelease == null) {
+      core.info('no release found');
     } else {
-      core.warning('no release found');
-      releaseVersion = 'N/A';
-      releaseNotes = 'No release found';
+      core.info('latestRelease: ' + latestRelease.tag_name);
+      releaseNumber = getNextReleaseNumber(latestRelease.tag_name, releaseNotes);
     }
 
-    core.setOutput('releaseVersion', releaseVersion);
-    core.setOutput('releaseNotes', releaseNotes);
+    core.info('creating draft release: ' + releaseNumber);
+
+    await createDraftRelease(releaseNumber, releaseNotes);
+
+    core.info('updating pull request');
+    await updatePullRequest(releaseNumber, releaseNotes);
 
   } catch (error) {
       core.setFailed(error.message);

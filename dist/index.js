@@ -6,43 +6,34 @@ module.exports =
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 const core = __webpack_require__(16);
-const github = __webpack_require__(647);
+const { extractPullRequestCommits, updatePullRequest } = __webpack_require__(115);
+const { getMostRecentRelease, createDraftRelease } = __webpack_require__(238);
+const { getNextReleaseNumber, generateChangelog } = __webpack_require__(142);
 
 async function run() {
   try {
+    core.info('running');
 
-    core.info('running')
-    const token = core.getInput('repo-token');
+    const commits = await extractPullRequestCommits();
+    const releaseNotes = generateChangelog(commits);
+    core.info('releaseNotes: \n' + releaseNotes);
 
-    core.info("token: " +  token);
-       
-    const octokit = github.getOctokit(token);
+    const latestRelease = await getMostRecentRelease();
 
-    const response = await octokit.request('GET /repos/{owner}/{repo}/releases', {
-      owner: github.context.payload.repository.owner.login,
-      repo: github.context.payload.repository.name
-    });
-
-    if (response.status !== 200) {
-      const error = 'failed to retrieve releases. response.status: ' + response.status + ' response.data: ' + response.data
-      core.error(error);
-      core.setFailed(error);
-      return;
-    }
-
-    let releaseVersion;
-    let releaseNotes;
-    if (response.data.length > 0) {
-      releaseVersion = response.data[0].tag_name;
-      releaseNotes = response.data[0].body;
+    let releaseNumber = 'v1.0.0';
+    if (latestRelease == null) {
+      core.info('no release found');
     } else {
-      core.warning('no release found');
-      releaseVersion = 'N/A';
-      releaseNotes = 'No release found';
+      core.info('latestRelease: ' + latestRelease.tag_name);
+      releaseNumber = getNextReleaseNumber(latestRelease.tag_name, releaseNotes);
     }
 
-    core.setOutput('releaseVersion', releaseVersion);
-    core.setOutput('releaseNotes', releaseNotes);
+    core.info('creating draft release: ' + releaseNumber);
+
+    await createDraftRelease(releaseNumber, releaseNotes);
+
+    core.info('updating pull request');
+    await updatePullRequest(releaseNumber, releaseNotes);
 
   } catch (error) {
       core.setFailed(error.message);
@@ -5817,6 +5808,144 @@ function wrappy (fn, cb) {
   }
 }
 
+
+/***/ }),
+
+/***/ 115:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+const core = __webpack_require__(16);
+const github = __webpack_require__(647);
+
+const token = core.getInput('repo-token');
+const teamName = core.getInput('team-name');
+const octokit = github.getOctokit(token);
+const owner = github.context.payload.repository.owner.login;
+const repo = github.context.payload.repository.name;
+const pullRequestNumber = github.context.payload.pull_request.number;
+
+async function extractPullRequestCommits() { 
+  const commits = await octokit.pulls.listCommits({
+    owner: owner,
+    repo: repo,
+    pull_number: pullRequestNumber,
+    per_page: 100
+  });
+
+  core.info('fetched: ' + commits.data.length + ' commits');
+
+  return commits;
+}
+
+async function updatePullRequest(releaseVersionNumber, releaseNotes) {
+  const pullRequestBody = `
+<team_name>${teamName}</team_name>
+<release_version>${releaseVersionNumber}</release_version>
+<release_description>
+
+ Release Notes: 
+ ${releaseNotes}
+
+ Impact:
+  - yahoo-uk-feed-trigger
+
+</release_description>
+  `;
+  
+  return octokit.pulls.update({
+    owner: owner,
+    repo: repo,
+    pull_number: pullRequestNumber,
+    body: pullRequestBody
+  });
+}
+
+module.exports.extractPullRequestCommits = extractPullRequestCommits;
+module.exports.updatePullRequest = updatePullRequest;
+
+/***/ }),
+
+/***/ 238:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+const core = __webpack_require__(16);
+const github = __webpack_require__(647);
+
+const token = core.getInput('repo-token');
+const octokit = github.getOctokit(token);
+const owner = github.context.payload.repository.owner.login;
+const repo = github.context.payload.repository.name;
+
+async function getMostRecentRelease() {
+  const response = await octokit.repos.listReleases({
+    owner: owner,
+    repo: repo
+  });
+
+  if (response.data.length > 0) {
+    return response.data[0];
+  } else {
+    return null;
+  }
+}
+
+async function createDraftRelease(releaseNumber, body) {
+  return octokit.repos.createRelease({
+    owner: owner,
+    repo: repo,
+    tag_name: releaseNumber,
+    name: releaseNumber,
+    body: body,
+    draft: true
+  });
+}
+
+module.exports.getMostRecentRelease = getMostRecentRelease;
+module.exports.createDraftRelease = createDraftRelease;
+
+/***/ }),
+
+/***/ 142:
+/***/ ((module) => {
+
+function getNextReleaseNumber(currentReleaseNumber, releaseChangelog) {
+  const result = currentReleaseNumber.match(/^v(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/); 
+  
+  if (result == null) {
+    console.log('current release number: ' + currentReleaseNumber + ' is not a semver number.');
+    return 'v1.0.0';
+  }
+  
+  let major = result[1];
+  let minor = result[2];
+  let patch = result[3];
+  
+  if (releaseChangelog.includes('BREAKING')) {
+    console.log('incrementing major number');
+    major++;
+    minor = 0;
+    patch = 0;
+  } else if (releaseChangelog.includes('feat')) {
+    console.log('incrementing minor number');
+    minor++;
+    patch = 0;
+  } else {
+    console.log('incrementing patch number');
+    patch++;
+  }
+  
+  return 'v' + major + '.' + minor + '.' + patch;
+}
+
+function generateChangelog(commits) {
+  const commitMessages = commits.data
+    .map(commit => ` - ${commit.commit.message}`);
+  const result = commitMessages.join('\n');
+  return result;
+}
+
+module.exports.getNextReleaseNumber = getNextReleaseNumber;
+module.exports.generateChangelog = generateChangelog;
 
 /***/ }),
 
