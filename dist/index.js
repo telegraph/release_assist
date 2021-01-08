@@ -6,34 +6,27 @@ module.exports =
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 const core = __webpack_require__(16);
-const { extractPullRequestCommits, updatePullRequest } = __webpack_require__(115);
-const { getMostRecentRelease, createDraftRelease } = __webpack_require__(238);
-const { getNextReleaseNumber, generateChangelog } = __webpack_require__(142);
+const { getMostRecentRelease, deleteRelease } = __webpack_require__(238);
 
 async function run() {
   try {
     core.info('running');
 
-    const commits = await extractPullRequestCommits();
-    const releaseNotes = generateChangelog(commits);
-    core.info('releaseNotes: \n' + releaseNotes);
-
     const latestRelease = await getMostRecentRelease();
 
-    let releaseNumber = 'v1.0.0';
     if (latestRelease == null) {
-      core.info('no release found');
-    } else {
-      core.info('latestRelease: ' + latestRelease.tag_name);
-      releaseNumber = getNextReleaseNumber(latestRelease.tag_name, releaseNotes);
+      core.info('no release found. nothing to delete');
+      return;
     }
 
-    core.info('creating draft release: ' + releaseNumber);
+    if (!latestRelease.draft) {
+      core.info('latest release is not a draft release');
+      return;
+    }
 
-    await createDraftRelease(releaseNumber, releaseNotes);
+    await deleteRelease(latestRelease.id);
 
-    core.info('updating pull request');
-    await updatePullRequest(releaseNumber, releaseNotes);
+    core.info('release: ' + latestRelease.tag_name + ' successfully deleted');
 
   } catch (error) {
       core.setFailed(error.message);
@@ -5811,60 +5804,6 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 115:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-const core = __webpack_require__(16);
-const github = __webpack_require__(647);
-
-const token = core.getInput('repo-token');
-const teamName = core.getInput('team-name');
-const octokit = github.getOctokit(token);
-const owner = github.context.payload.repository.owner.login;
-const repo = github.context.payload.repository.name;
-const pullRequestNumber = github.context.payload.pull_request.number;
-
-async function extractPullRequestCommits() { 
-  const commits = await octokit.pulls.listCommits({
-    owner: owner,
-    repo: repo,
-    pull_number: pullRequestNumber,
-    per_page: 100
-  });
-
-  core.info('fetched: ' + commits.data.length + ' commits');
-
-  return commits;
-}
-
-async function updatePullRequest(releaseVersionNumber, releaseNotes) {
-  const pullRequestBody = `
-<team_name>${teamName}</team_name>
-<release_version>${releaseVersionNumber}</release_version>
-<release_description>
-
- Release Notes: 
- ${releaseNotes}
-
- Impact:
-  - yahoo-uk-feed-trigger
-
-</release_description>
-  `;
-  
-  return octokit.pulls.update({
-    owner: owner,
-    repo: repo,
-    pull_number: pullRequestNumber,
-    body: pullRequestBody
-  });
-}
-
-module.exports.extractPullRequestCommits = extractPullRequestCommits;
-module.exports.updatePullRequest = updatePullRequest;
-
-/***/ }),
-
 /***/ 238:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -5889,63 +5828,16 @@ async function getMostRecentRelease() {
   }
 }
 
-async function createDraftRelease(releaseNumber, body) {
-  return octokit.repos.createRelease({
+async function deleteRelease(releaseNumber) {
+  return octokit.repos.deleteRelease({
     owner: owner,
     repo: repo,
-    tag_name: releaseNumber,
-    name: releaseNumber,
-    body: body,
-    draft: true
+    release_id: releaseNumber
   });
 }
 
 module.exports.getMostRecentRelease = getMostRecentRelease;
-module.exports.createDraftRelease = createDraftRelease;
-
-/***/ }),
-
-/***/ 142:
-/***/ ((module) => {
-
-function getNextReleaseNumber(currentReleaseNumber, releaseChangelog) {
-  const result = currentReleaseNumber.match(/^v(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/); 
-  
-  if (result == null) {
-    console.log('current release number: ' + currentReleaseNumber + ' is not a semver number.');
-    return 'v1.0.0';
-  }
-  
-  let major = result[1];
-  let minor = result[2];
-  let patch = result[3];
-  
-  if (releaseChangelog.includes('BREAKING')) {
-    console.log('incrementing major number');
-    major++;
-    minor = 0;
-    patch = 0;
-  } else if (releaseChangelog.includes('feat')) {
-    console.log('incrementing minor number');
-    minor++;
-    patch = 0;
-  } else {
-    console.log('incrementing patch number');
-    patch++;
-  }
-  
-  return 'v' + major + '.' + minor + '.' + patch;
-}
-
-function generateChangelog(commits) {
-  const commitMessages = commits.data
-    .map(commit => ` - ${commit.commit.message}`);
-  const result = commitMessages.join('\n');
-  return result;
-}
-
-module.exports.getNextReleaseNumber = getNextReleaseNumber;
-module.exports.generateChangelog = generateChangelog;
+module.exports.deleteRelease = deleteRelease;
 
 /***/ }),
 

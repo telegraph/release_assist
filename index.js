@@ -1,32 +1,25 @@
 const core = require('@actions/core');
-const { extractPullRequestCommits, updatePullRequest } = require('./pullRequest');
-const { getMostRecentRelease, createDraftRelease } = require('./release');
-const { getNextReleaseNumber, generateChangelog } = require('./util');
+const { getMostRecentRelease, deleteRelease } = require('./release');
 
 async function run() {
   try {
     core.info('running');
 
-    const commits = await extractPullRequestCommits();
-    const releaseNotes = generateChangelog(commits);
-    core.info('releaseNotes: \n' + releaseNotes);
-
     const latestRelease = await getMostRecentRelease();
 
-    let releaseNumber = 'v1.0.0';
     if (latestRelease == null) {
-      core.info('no release found');
-    } else {
-      core.info('latestRelease: ' + latestRelease.tag_name);
-      releaseNumber = getNextReleaseNumber(latestRelease.tag_name, releaseNotes);
+      core.info('no release found. nothing to delete');
+      return;
     }
 
-    core.info('creating draft release: ' + releaseNumber);
+    if (!latestRelease.draft) {
+      core.info('latest release is not a draft release');
+      return;
+    }
 
-    await createDraftRelease(releaseNumber, releaseNotes);
+    await deleteRelease(latestRelease.id);
 
-    core.info('updating pull request');
-    await updatePullRequest(releaseNumber, releaseNotes);
+    core.info('release: ' + latestRelease.tag_name + ' successfully deleted');
 
   } catch (error) {
       core.setFailed(error.message);

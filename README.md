@@ -3,7 +3,7 @@
 
 # NOTE: this is a public repository
 
-### This action creates a draft release from the commit messages on a PR. Then updates the PR with the generated version number and changelog
+### This action creates deletes the most recent draft release.
 
 
 # Build 

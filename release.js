@@ -19,16 +19,13 @@ async function getMostRecentRelease() {
   }
 }
 
-async function createDraftRelease(releaseNumber, body) {
-  return octokit.repos.createRelease({
+async function deleteRelease(releaseNumber) {
+  return octokit.repos.deleteRelease({
     owner: owner,
     repo: repo,
-    tag_name: releaseNumber,
-    name: releaseNumber,
-    body: body,
-    draft: true
+    release_id: releaseNumber
   });
 }
 
 module.exports.getMostRecentRelease = getMostRecentRelease;
-module.exports.createDraftRelease = createDraftRelease;
+module.exports.deleteRelease = deleteRelease;
