@@ -1,5 +1,5 @@
 const core = require('@actions/core');
-const { getMostRecentRelease, deleteRelease } = require('./release');
+const { getMostRecentRelease, updateRelease } = require('./release');
 
 async function run() {
   try {
@@ -8,7 +8,7 @@ async function run() {
     const latestRelease = await getMostRecentRelease();
 
     if (latestRelease == null) {
-      core.info('no release found. nothing to delete');
+      core.info('no release found. nothing to update');
       return;
     }
 
@@ -17,9 +17,9 @@ async function run() {
       return;
     }
 
-    await deleteRelease(latestRelease.id);
+    await updateRelease(latestRelease.id);
 
-    core.info('release: ' + latestRelease.tag_name + ' successfully deleted');
+    core.info('release: ' + latestRelease.tag_name + ' successfully updated to a full release');
 
   } catch (error) {
       core.setFailed(error.message);

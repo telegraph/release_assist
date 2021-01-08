@@ -6,7 +6,7 @@ module.exports =
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 const core = __webpack_require__(16);
-const { getMostRecentRelease, deleteRelease } = __webpack_require__(238);
+const { getMostRecentRelease, updateRelease } = __webpack_require__(238);
 
 async function run() {
   try {
@@ -15,7 +15,7 @@ async function run() {
     const latestRelease = await getMostRecentRelease();
 
     if (latestRelease == null) {
-      core.info('no release found. nothing to delete');
+      core.info('no release found. nothing to update');
       return;
     }
 
@@ -24,9 +24,9 @@ async function run() {
       return;
     }
 
-    await deleteRelease(latestRelease.id);
+    await updateRelease(latestRelease.id);
 
-    core.info('release: ' + latestRelease.tag_name + ' successfully deleted');
+    core.info('release: ' + latestRelease.tag_name + ' successfully updated to a full release');
 
   } catch (error) {
       core.setFailed(error.message);
@@ -5828,16 +5828,17 @@ async function getMostRecentRelease() {
   }
 }
 
-async function deleteRelease(releaseNumber) {
-  return octokit.repos.deleteRelease({
+async function updateRelease(releaseNumber) {
+  return octokit.repos.updateRelease({
     owner: owner,
     repo: repo,
-    release_id: releaseNumber
+    release_id: releaseNumber,
+    draft: false
   });
 }
 
 module.exports.getMostRecentRelease = getMostRecentRelease;
-module.exports.deleteRelease = deleteRelease;
+module.exports.updateRelease = updateRelease;
 
 /***/ }),
 

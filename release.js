@@ -19,13 +19,14 @@ async function getMostRecentRelease() {
   }
 }
 
-async function deleteRelease(releaseNumber) {
-  return octokit.repos.deleteRelease({
+async function updateRelease(releaseNumber) {
+  return octokit.repos.updateRelease({
     owner: owner,
     repo: repo,
-    release_id: releaseNumber
+    release_id: releaseNumber,
+    draft: false
   });
 }
 
 module.exports.getMostRecentRelease = getMostRecentRelease;
-module.exports.deleteRelease = deleteRelease;
+module.exports.updateRelease = updateRelease;
