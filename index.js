@@ -8,8 +8,7 @@ async function run() {
     core.info('running');
 
     const commits = await extractPullRequestCommits();
-    const releaseNotes = generateChangelog(commits);
-    core.info('releaseNotes: \n' + releaseNotes);
+    const changelog = generateChangelog(commits);
 
     const latestRelease = await getMostRecentRelease();
 
@@ -18,15 +17,21 @@ async function run() {
       core.info('no release found');
     } else {
       core.info('latestRelease: ' + latestRelease.tag_name);
-      releaseNumber = getNextReleaseNumber(latestRelease.tag_name, releaseNotes);
+      releaseNumber = getNextReleaseNumber(latestRelease.tag_name, changelog);
     }
 
     core.info('creating draft release: ' + releaseNumber);
 
+    const releaseNotes = changelog.generateMarkdown();
+
+    core.info('generated release notes: ' + releaseNotes);
+    
     await createDraftRelease(releaseNumber, releaseNotes);
 
     core.info('updating pull request');
     await updatePullRequest(releaseNumber, releaseNotes);
+
+    core.info('done');
 
   } catch (error) {
       core.setFailed(error.message);
