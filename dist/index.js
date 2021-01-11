@@ -5848,7 +5848,7 @@ async function updatePullRequest(releaseVersionNumber, releaseNotes) {
 <release_version>${releaseVersionNumber}</release_version>
 <release_description>
 
- ## Release Notess
+ ## Release Notes
  ${releaseNotes}
 
  ## Impact
