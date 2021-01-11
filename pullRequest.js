@@ -27,11 +27,11 @@ async function updatePullRequest(releaseVersionNumber, releaseNotes) {
 <release_version>${releaseVersionNumber}</release_version>
 <release_description>
 
- Release Notes: 
+ ## Release Notess
  ${releaseNotes}
 
- Impact:
-  - yahoo-uk-feed-trigger
+ ## Impact
+  - ${repo}
 
 </release_description>
   `;

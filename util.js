@@ -52,28 +52,28 @@ class Changelog {
     
     if (this.features.length > 0) {
       markdown += breakingLine;
-      markdown += '## ✨ Features';
+      markdown += '### ✨ Features';
       markdown += breakingLine;
       markdown += this.joinCommitMessages(this.features);
     }
 
     if (this.fixes.length > 0) {
       markdown += breakingLine;
-      markdown += '## 🐞 Fixes';
+      markdown += '### 🐞 Fixes';
       markdown += breakingLine;
       markdown += this.joinCommitMessages(this.fixes);
     }
 
     if (this.docs.length > 0) {
       markdown += breakingLine;
-      markdown += '## 📋 Documentation';
+      markdown += '### 📋 Documentation';
       markdown += breakingLine;
       markdown += this.joinCommitMessages(this.docs);
     }
 
     if (this.others.length > 0) {
       markdown += breakingLine;
-      markdown += '## 🛠 Others';
+      markdown += '### 🛠 Others';
       markdown += breakingLine;
       markdown += this.joinCommitMessages(this.others);
     }
