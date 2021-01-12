@@ -1,18 +1,6 @@
-name: 'Get pull request body'
-description: 'Return the body of a pull request'
-outputs:
-  project_name: 
-    description: 'The name of the github repo'
-  label:
-    description: 'The name of the label applied to the PR'
-  team_name:
-    description: 'Team name opening PR'
-  release_description:
-    description: 'Release description'
-  release_version:
-    description: 'The version of the release to start'
-  pr_link:
-    description: 'Link to the PR'
+name: 'Delete draft release'
+description: 'Deletes the most recent draft release (if any)'
+
 runs:
   using: 'node12'
   main: 'dist/index.js'
