@@ -2,7 +2,6 @@
 
 const core = require('@actions/core');
 const github = require('@actions/github');
-const markdownToAtlassianWikiMarkup = require("@kenchan0130/markdown-to-atlassian-wiki-markup").markdownToAtlassianWikiMarkup;
 
 function extractJiraTicketId(branchName) {
   const result = /(?<jira_id>[A-Z]+-[0-9]+).*/.exec(branchName);
@@ -31,12 +30,7 @@ try {
       res = github.context.payload.pull_request.body.match(re);
       if (res != null) {
         const outputKey = res[1];
-        let outputValue;
-        if (elem === "release_description") {
-          outputValue = markdownToAtlassianWikiMarkup(res[2]);
-        } else {
-          outputValue = res[2];
-        }
+        const outputValue = res[2];
         core.setOutput(outputKey, outputValue);
       }
     });	

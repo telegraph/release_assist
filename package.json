@@ -19,7 +19,6 @@
   "homepage": "https://github.com/telegraph/release_assist#readme",
   "dependencies": {
     "@actions/core": "^1.2.6",
-    "@actions/github": "^4.0.0",
-    "@kenchan0130/markdown-to-atlassian-wiki-markup": "^3.0.9"
+    "@actions/github": "^4.0.0"
   }
 }
