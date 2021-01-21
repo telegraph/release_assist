@@ -29,7 +29,9 @@ try {
       let re = new RegExp(`<\s*?(${elem})\s*?>([\\\s\\\S]*?)<\/\s*?${elem}>\s*?`);
       res = github.context.payload.pull_request.body.match(re);
       if (res != null) {
-        core.setOutput(res[1], res[2].replace(/[\n\r]+/g, ' '));
+        const outputKey = res[1];
+        const outputValue = res[2];
+        core.setOutput(outputKey, outputValue);
       }
     });	
 } catch (error) {
