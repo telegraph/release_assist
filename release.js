@@ -5,6 +5,7 @@ const token = core.getInput('repo-token');
 const octokit = github.getOctokit(token);
 const owner = github.context.payload.repository.owner.login;
 const repo = github.context.payload.repository.name;
+const pullRequestNumber = github.context.payload.pull_request.number;
 
 async function getMostRecentRelease() {
   const response = await octokit.repos.listReleases({
@@ -24,7 +25,7 @@ async function createDraftRelease(releaseNumber, body) {
     owner: owner,
     repo: repo,
     tag_name: releaseNumber,
-    name: releaseNumber,
+    name: releaseNumber + "-" + pullRequestNumber,
     body: body,
     draft: true
   });
