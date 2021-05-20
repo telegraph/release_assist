@@ -12,9 +12,9 @@ async function run() {
       return;
     }
 
-    await updateRelease(latestRelease.id, latestRelease.tag_name);
+    await updateRelease(pullRequestRelease.id, pullRequestRelease.tag_name);
 
-    core.info('release: ' + latestRelease.tag_name + ' successfully updated to a full release');
+    core.info('release: ' + pullRequestRelease.tag_name + ' successfully updated to a full release');
 
   } catch (error) {
       core.setFailed(error.message);
