@@ -5,15 +5,16 @@ const token = core.getInput('repo-token');
 const octokit = github.getOctokit(token);
 const owner = github.context.payload.repository.owner.login;
 const repo = github.context.payload.repository.name;
+const pullRequestNumber = github.context.payload.pull_request.number;
 
-async function getMostRecentRelease() {
+async function getPullRequestDraftRelease() {
   const response = await octokit.repos.listReleases({
     owner: owner,
     repo: repo
   });
 
   if (response.data.length > 0) {
-    return response.data[0];
+    return response.data.find(release => release.draft && release.name && release.name.includes("PR" + pullRequestNumber));
   } else {
     return null;
   }
@@ -27,5 +28,5 @@ async function deleteRelease(releaseNumber) {
   });
 }
 
-module.exports.getMostRecentRelease = getMostRecentRelease;
+module.exports.getPullRequestDraftRelease = getPullRequestDraftRelease;
 module.exports.deleteRelease = deleteRelease;

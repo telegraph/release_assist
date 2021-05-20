@@ -6,27 +6,22 @@ module.exports =
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 const core = __webpack_require__(16);
-const { getMostRecentRelease, deleteRelease } = __webpack_require__(238);
+const { getPullRequestDraftRelease, deleteRelease } = __webpack_require__(238);
 
 async function run() {
   try {
     core.info('running');
 
-    const latestRelease = await getMostRecentRelease();
+    const pullRequestRelease = await getPullRequestDraftRelease();
 
-    if (latestRelease == null) {
-      core.info('no release found. nothing to delete');
+    if (pullRequestRelease == null) {
+      core.info('no PR release found. nothing to delete');
       return;
     }
 
-    if (!latestRelease.draft) {
-      core.info('latest release is not a draft release');
-      return;
-    }
+    await deleteRelease(pullRequestRelease.id);
 
-    await deleteRelease(latestRelease.id);
-
-    core.info('release: ' + latestRelease.tag_name + ' successfully deleted');
+    core.info('release: ' + pullRequestRelease.tag_name + ' successfully deleted');
 
   } catch (error) {
       core.setFailed(error.message);
@@ -5814,15 +5809,16 @@ const token = core.getInput('repo-token');
 const octokit = github.getOctokit(token);
 const owner = github.context.payload.repository.owner.login;
 const repo = github.context.payload.repository.name;
+const pullRequestNumber = github.context.payload.pull_request.number;
 
-async function getMostRecentRelease() {
+async function getPullRequestDraftRelease() {
   const response = await octokit.repos.listReleases({
     owner: owner,
     repo: repo
   });
 
   if (response.data.length > 0) {
-    return response.data[0];
+    return response.data.find(release => release.draft && release.name && release.name.includes("PR" + pullRequestNumber));
   } else {
     return null;
   }
@@ -5836,7 +5832,7 @@ async function deleteRelease(releaseNumber) {
   });
 }
 
-module.exports.getMostRecentRelease = getMostRecentRelease;
+module.exports.getPullRequestDraftRelease = getPullRequestDraftRelease;
 module.exports.deleteRelease = deleteRelease;
 
 /***/ }),
