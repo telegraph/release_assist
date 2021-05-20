@@ -1,23 +1,18 @@
 const core = require('@actions/core');
-const { getMostRecentRelease, updateRelease } = require('./release');
+const { getPullRequestDraftRelease, updateRelease } = require('./release');
 
 async function run() {
   try {
     core.info('running');
 
-    const latestRelease = await getMostRecentRelease();
+    const pullRequestRelease = await getPullRequestDraftRelease();
 
-    if (latestRelease == null) {
-      core.info('no release found. nothing to update');
+    if (pullRequestRelease == null) {
+      core.info('no PR release found. nothing to update');
       return;
     }
 
-    if (!latestRelease.draft) {
-      core.info('latest release is not a draft release');
-      return;
-    }
-
-    await updateRelease(latestRelease.id);
+    await updateRelease(latestRelease.id, latestRelease.tag_name);
 
     core.info('release: ' + latestRelease.tag_name + ' successfully updated to a full release');
 
