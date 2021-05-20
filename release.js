@@ -25,7 +25,7 @@ async function createDraftRelease(releaseNumber, body) {
     owner: owner,
     repo: repo,
     tag_name: releaseNumber,
-    name: releaseNumber + "-" + pullRequestNumber,
+    name: releaseNumber + "-PR" + pullRequestNumber,
     body: body,
     draft: true
   });
