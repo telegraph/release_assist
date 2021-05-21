@@ -5851,8 +5851,24 @@ async function updatePullRequest(releaseVersionNumber, releaseNotes) {
  ## Release Notes
  ${releaseNotes}
 
- ## Impact
+ ## Risk: (High/Medium/Low)
+  - High: if the changes can't be tested/are not backwards compatible or the probability to create issues is high
+  - Medium: if the changes have been tested and everthing works in preprod
+  - Low: if the changes do not affect functionality (tests, docs, chore)
+
+ ## Impact: (High/Medium/Low)
   - ${repo}
+  - High: if the changes directly impact editorial or user facing services (cms, website, mobile app, apple news, amp, registrations, subscriptions)
+  - Medium: if the changes directly impact backend services only
+  - Low: if the changes do no impact any other services
+
+## Impact description (what happens if the release is not successful): 
+  - (i.e) AMP pages will not update or will be blank if there is no cache
+  - (i.e) TCUK web pages won't update or will show an error of there is no cache
+  - (i.e) all content API clients will show an error
+
+## Downtime: expected downtime for this release
+  - (i.e) Zero Downtime, 5 minutes, 30 minutes, etc
 
 </release_description>
   `;
