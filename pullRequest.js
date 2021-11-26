@@ -60,5 +60,20 @@ async function updatePullRequest(releaseVersionNumber, releaseNotes) {
   });
 }
 
+async function addLabelToPullRequest(releaseVersionNumber) {
+    const versionLabel = `draftRelease:${releaseVersionNumber}`
+
+    core.info('Pull request: ' + pullRequestNumber)
+    core.info('Version label: ' + versionLabel)
+
+    return octokit.issues.addLabels({
+        owner: owner,
+        repo: repo,
+        issue_number: pullRequestNumber,
+        labels: [versionLabel]
+    });
+}
+
 module.exports.extractPullRequestCommits = extractPullRequestCommits;
 module.exports.updatePullRequest = updatePullRequest;
+module.exports.addLabelToPullRequest = addLabelToPullRequest;
