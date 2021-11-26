@@ -5786,7 +5786,7 @@ async function getPullRequestDraftRelease() {
     repo: repo
   });
 
-  const labels_response = octokit.issues.listLabelsOnIssue({
+  const labels_response = await octokit.issues.listLabelsOnIssue({
     owner: owner,
     repo: repo,
     issue_number: pullRequestNumber
