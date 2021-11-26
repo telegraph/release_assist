@@ -5793,6 +5793,7 @@ async function getPullRequestDraftRelease() {
   });
 
   core.info(JSON.stringify(labels_response, null, 2));
+  core.info(labels_response.data.find(label => label.name.includes('draftRelease:')).name.substring(13));
 
   if (response.data.length > 0) {
     return response.data.find(release => release.draft && release.name && release.name.includes("PR" + pullRequestNumber));
