@@ -16,8 +16,13 @@ async function getPullRequestDraftRelease() {
     issue_number: pullRequestNumber
   });
 
-  // core.info(JSON.stringify(labels_response, null, 2));
-  const draft_version = labels_response.data.find(label => label.name.includes('draftRelease:')).name.substring(13);
+  let draft_version = ''
+
+  if (labels_response.data.length > 0) {
+    draft_version = labels_response.data.find(label => label.name.includes('draftRelease:')).name.substring(13);
+  } else {
+    return null;
+  }
 
   // find draft releases
   const response = await octokit.repos.listReleases({
