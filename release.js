@@ -19,7 +19,7 @@ async function getPullRequestDraftRelease() {
     issue_number: pullRequestNumber
   });
 
-  core.info(labels_response.data)
+  core.info(JSON.stringify(labels_response, null, 2));
 
   if (response.data.length > 0) {
     return response.data.find(release => release.draft && release.name && release.name.includes("PR" + pullRequestNumber));
