@@ -7,6 +7,8 @@ async function run() {
   try {
     core.info('running');
 
+    core.info('checking release number...')
+
     const commits = await extractPullRequestCommits();
     const changelog = generateChangelog(commits);
 
