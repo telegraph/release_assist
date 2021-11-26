@@ -5,7 +5,6 @@ const { getNextReleaseNumber, generateChangelog } = require('./util');
 
 async function run() {
   try {
-    core.info('running');
 
     core.info('checking release number...')
 
