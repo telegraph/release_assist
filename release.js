@@ -13,6 +13,14 @@ async function getPullRequestDraftRelease() {
     repo: repo
   });
 
+  const labels_response = octokit.issues.listLabelsOnIssue({
+    owner: owner,
+    repo: repo,
+    issue_number: pullRequestNumber
+  });
+
+  core.info(labels_response)
+
   if (response.data.length > 0) {
     return response.data.find(release => release.draft && release.name && release.name.includes("PR" + pullRequestNumber));
   } else {
