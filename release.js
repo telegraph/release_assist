@@ -8,13 +8,21 @@ const repo = github.context.payload.repository.name;
 const pullRequestNumber = github.context.payload.pull_request.number;
 
 async function getPullRequestDraftRelease() {
+  const labels_response = await octokit.issues.listLabelsOnIssue({
+    owner: owner,
+    repo: repo,
+    issue_number: pullRequestNumber
+  });
+
+  const draft_version = labels_response.data.find(label => label.name.includes('draftRelease:')).name.substring(13);
+
   const response = await octokit.repos.listReleases({
     owner: owner,
     repo: repo
   });
 
   if (response.data.length > 0) {
-    return response.data.find(release => release.draft && release.name && release.name.includes("PR"  + pullRequestNumber));
+    return response.data.find(release => release.draft && release.name && release.name.includes(draft_version + "-PR"  + pullRequestNumber));
   } else {
     return null;
   }
