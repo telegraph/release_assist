@@ -5,8 +5,7 @@ const { getNextReleaseNumber, generateChangelog } = require('./util');
 
 async function run() {
   try {
-
-    core.info('checking release number...')
+    core.info('running');
 
     const commits = await extractPullRequestCommits();
     const changelog = generateChangelog(commits);
