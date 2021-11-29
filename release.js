@@ -28,7 +28,7 @@ async function getPullRequestDraftRelease() {
         repo: repo,
         name: draft_version_label.name
       });
-      core.info('Draft label ' + draft_version_label.name + 'deleted')
+      core.info('Draft label ' + draft_version_label.name + ' deleted')
     } else {
       return null;
     }
