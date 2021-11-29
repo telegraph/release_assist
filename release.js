@@ -19,7 +19,12 @@ async function getPullRequestDraftRelease() {
   let draft_version = ''
 
   if (labels_response.data.length > 0) {
-    draft_version = labels_response.data.find(label => label.name.includes('draftRelease:')).name.substring(13);
+    let draft_version_label = labels_response.data.find(label => label.name.includes('draftRelease:'));
+    if (typeof draft_version_label !== 'undefined') {
+      draft_version = draft_version_label.name.substring(13);
+    } else {
+      return null;
+    }
   } else {
     return null;
   }
