@@ -5794,6 +5794,13 @@ async function getPullRequestDraftRelease() {
     let draft_version_label = labels_response.data.find(label => label.name.includes('draftRelease:'));
     if (typeof draft_version_label !== 'undefined') {
       draft_version = draft_version_label.name.substring(13);
+      //delete draft label
+      await octokit.issues.deleteLabel({
+        owner: owner,
+        repo: repo,
+        name: draft_version_label.name
+      });
+      core.info('Draft label ' + draft_version_label.name + ' deleted')
     } else {
       return null;
     }
