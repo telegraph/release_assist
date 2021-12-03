@@ -1,5 +1,5 @@
 const core = require('@actions/core');
-const { extractPullRequestCommits, updatePullRequest } = require('./pullRequest');
+const { extractPullRequestCommits, updatePullRequest, addLabelToPullRequest } = require('./pullRequest');
 const { getMostRecentRelease, createDraftRelease } = require('./release');
 const { getNextReleaseNumber, generateChangelog } = require('./util');
 
@@ -30,6 +30,9 @@ async function run() {
 
     core.info('updating pull request');
     await updatePullRequest(releaseNumber, releaseNotes);
+
+    core.info('adding draftRelease label')
+    await addLabelToPullRequest(releaseNumber)
 
     core.info('done');
 
