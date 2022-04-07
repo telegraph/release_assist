@@ -13,6 +13,6 @@ function addTopics(topics) {
   return github.context.payload.replaceAllTopics(oldTopics + topics);
 }
 
-module.exports.deleteLabel = getTopics;
-module.exports.deleteLabel = addTopics;
-module.exports.deleteLabel = replaceTopics;
+module.exports.getTopics = getTopics;
+module.exports.addTopics = addTopics;
+module.exports.replaceTopics = replaceTopics;
