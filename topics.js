@@ -1,15 +1,22 @@
 const github = require('@actions/github');
+const core = require("@actions/core");
+const oktokit = require("@octokit/rest");
 
-function getTopics() {
-  return github.context.payload.getAllTopics();
+const token = core.getInput('repo-token');
+// const octokit = github.getOctokit(token);
+
+async function getTopics() {
+  const topics = oktokit.getAllTopics();
+  core.info(topics);
+  return topics;
 }
 
-function replaceTopics(topics) {
-  return github.context.payload.replaceAllTopics(topics);
+async function replaceTopics(topics) {
+  return oktokit.replaceTopics(topics)
 }
 
-function addTopics(topics) {
-  const oldTopics = getTopics();
+async function addTopics(topics) {
+  const oldTopics = await getTopics();
   return github.context.payload.replaceAllTopics(oldTopics + topics);
 }
 
