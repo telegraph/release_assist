@@ -1,5 +1,5 @@
-name: 'Update draft release'
-description: 'Updates the most recent draft release to a full release'
+name: 'Update topics from pom'
+description: 'Updates topics reading from the pom in the root'
 inputs:
   repo-token:
     description: 'Github token used to access github api. usually secrets.GITHUB_TOKEN'
