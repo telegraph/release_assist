@@ -17,7 +17,7 @@ async function replaceTopics(topics) {
 
 async function addTopics(topics) {
   const oldTopics = await getTopics();
-  return github.context.payload.replaceAllTopics(oldTopics + topics);
+  return oktokit.replaceAllTopics(oldTopics + topics);
 }
 
 module.exports.getTopics = getTopics;

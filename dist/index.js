@@ -5827,23 +5827,38 @@ function wrappy (fn, cb) {
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 const github = __nccwpck_require__(739);
+const core = __nccwpck_require__(452);
+const oktokit = __nccwpck_require__(980);
 
-function getTopics() {
-  return github.context.payload.getAllTopics();
+const token = core.getInput('repo-token');
+// const octokit = github.getOctokit(token);
+
+async function getTopics() {
+  const topics = oktokit.getAllTopics();
+  core.info(topics);
+  return topics;
 }
 
-function replaceTopics(topics) {
-  return github.context.payload.replaceAllTopics(topics);
+async function replaceTopics(topics) {
+  return oktokit.replaceTopics(topics)
 }
 
-function addTopics(topics) {
-  const oldTopics = getTopics();
-  return github.context.payload.replaceAllTopics(oldTopics + topics);
+async function addTopics(topics) {
+  const oldTopics = await getTopics();
+  return oktokit.replaceAllTopics(oldTopics + topics);
 }
 
 module.exports.getTopics = getTopics;
 module.exports.addTopics = addTopics;
 module.exports.replaceTopics = replaceTopics;
+
+
+/***/ }),
+
+/***/ 980:
+/***/ ((module) => {
+
+module.exports = eval("require")("@octokit/rest");
 
 
 /***/ }),
@@ -6009,7 +6024,7 @@ async function run() {
   try {
     core.info('running update-topics-from-pom');
 
-    const res = addTopics("pippo");
+    const res = await addTopics("pippo");
     await deleteLabel('add-pom-topics');
     core.info(res);
 
