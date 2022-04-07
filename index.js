@@ -4,7 +4,7 @@ const { addTopics } = require('./topics');
 
 async function run() {
   try {
-    core.info('running');
+    core.info('running update-topics-from-pom');
 
     const res = addTopics("pippo");
     await deleteLabel('add-pom-topics');
