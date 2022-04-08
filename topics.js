@@ -21,7 +21,7 @@ async function replaceTopics(topics) {
     owner: owner,
     repo: repo,
     names: topics,
-    auth: tokenAuth
+    authorization: tokenAuth
   })
 }
 
