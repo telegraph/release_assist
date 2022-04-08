@@ -5830,7 +5830,6 @@ const github = __nccwpck_require__(739);
 const core = __nccwpck_require__(452);
 
 const token = core.getInput('repo-token');
-const authToken = core.getInput('auth-token');
 const octokit = github.getOctokit(token);
 const owner = github.context.payload.repository.owner.login;
 const repo = github.context.payload.repository.name;
@@ -5838,7 +5837,6 @@ const repo = github.context.payload.repository.name;
 // const tokenAuth = "Bearer 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";
 
 async function getTopics() {
-  core.info('auth Token: ' + authToken);
   return await octokit.request('GET /repos/{owner}/{repo}/topics', {
     owner: owner,
     repo: repo
@@ -5846,11 +5844,16 @@ async function getTopics() {
 }
 
 async function replaceTopics(topics) {
-  await octokit.request('PUT /repos/{owner}/{repo}/topics', {
+  await octokit.rest.repos.replaceAllTopics({
     owner: owner,
     repo: repo,
     names: topics
   })
+  // await octokit.request('PUT /repos/{owner}/{repo}/topics', {
+  //   owner: owner,
+  //   repo: repo,
+  //   names: topics
+  // })
 }
 
 async function addTopics(topics) {
