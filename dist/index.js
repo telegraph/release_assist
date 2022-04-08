@@ -5843,19 +5843,22 @@ async function getTopics() {
 }
 
 async function replaceTopics(topics) {
-  await request('PUT /repos/{owner}/{repo}/topics', {
-    headers: {
-      authorization: tokenAuth,
-    },
-    owner: owner,
-    repo: repo,
-    names: topics
-  });
-  // await octokit.request('PUT /repos/{owner}/{repo}/topics', {
+  // await request('PUT /repos/{owner}/{repo}/topics', {
+  //   headers: {
+  //     authorization: tokenAuth,
+  //   },
   //   owner: owner,
   //   repo: repo,
   //   names: topics
-  // })
+  // });
+  await octokit.request('PUT /repos/{owner}/{repo}/topics', {
+    // headers: {
+    //   authorization: tokenAuth,
+    // },
+    owner: owner,
+    repo: repo,
+    names: topics
+  })
 }
 
 async function addTopics(topics) {
