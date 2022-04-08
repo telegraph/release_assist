@@ -5828,6 +5828,7 @@ function wrappy (fn, cb) {
 
 const github = __nccwpck_require__(739);
 const core = __nccwpck_require__(452);
+const { Octokit } = __nccwpck_require__(980);
 
 const token = core.getInput('repo-token');
 const octokit = github.getOctokit(token);
@@ -5877,6 +5878,14 @@ async function addTopics(topics) {
 module.exports.getTopics = getTopics;
 module.exports.addTopics = addTopics;
 module.exports.replaceTopics = replaceTopics;
+
+
+/***/ }),
+
+/***/ 980:
+/***/ ((module) => {
+
+module.exports = eval("require")("@octokit/rest");
 
 
 /***/ }),

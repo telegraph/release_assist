@@ -1,5 +1,6 @@
 const github = require('@actions/github');
 const core = require("@actions/core");
+const { Octokit } = require("@octokit/rest");
 
 const token = core.getInput('repo-token');
 const octokit = github.getOctokit(token);
