@@ -5828,14 +5828,12 @@ function wrappy (fn, cb) {
 
 const github = __nccwpck_require__(739);
 const core = __nccwpck_require__(452);
-const { Octokit } = __nccwpck_require__(980);
 
 const token = core.getInput('repo-token');
 const octokit = github.getOctokit(token);
 const owner = github.context.payload.repository.owner.login;
 const repo = github.context.payload.repository.name;
-// const tokenAuth = createTokenAuth(token);
-// const tokenAuth = "Bearer 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";
+const tokenAuth = "Bearer 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";
 
 async function getTopics() {
   return await octokit.request('GET /repos/{owner}/{repo}/topics', {
@@ -5844,25 +5842,15 @@ async function getTopics() {
   })
 }
 
-async function replaceTopics(topicsReceived) {
-  const octokitt = new Octokit({
-    previews: ["mercy-preview"],
-  });
-  const {
-    data: { topics },
-  } = await octokitt.rest.repos.get({
+async function replaceTopics(topics) {
+  await request('PUT /repos/{owner}/{repo}/topics', {
+    headers: {
+      authorization: tokenAuth,
+    },
     owner: owner,
     repo: repo,
-    mediaType: {
-      previews: ["symmetra"],
-    },
+    names: topics
   });
-  octokitt.rest.repos.replaceAllTopics({
-    owner,
-    repo,
-    topics,
-  });
-
   // await octokit.request('PUT /repos/{owner}/{repo}/topics', {
   //   owner: owner,
   //   repo: repo,
@@ -5878,14 +5866,6 @@ async function addTopics(topics) {
 module.exports.getTopics = getTopics;
 module.exports.addTopics = addTopics;
 module.exports.replaceTopics = replaceTopics;
-
-
-/***/ }),
-
-/***/ 980:
-/***/ ((module) => {
-
-module.exports = eval("require")("@octokit/rest");
 
 
 /***/ }),
