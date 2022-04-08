@@ -8,12 +8,12 @@ async function run() {
 
     let topics = await getTopics();
     core.info('here previous topics: ');
-    core.info(topics);
+    core.info(topics.data);
     // await addTopics(["pippo", "pluto"]);
     // await deleteLabel('add-pom-topics');
 
     topics = await getTopics();
-    core.info('Topics now: ' + topics.names);
+    core.info('Topics now: ' + topics.data.names);
 
   } catch (error) {
       core.setFailed(error.message);
