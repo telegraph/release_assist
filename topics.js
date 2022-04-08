@@ -23,7 +23,7 @@ async function replaceTopics(topics) {
 
 async function addTopics(topics) {
   const oldTopics = await getTopics();
-  await replaceTopics(oldTopics + topics);
+  await replaceTopics(oldTopics.names + topics);
 }
 
 module.exports.getTopics = getTopics;

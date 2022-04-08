@@ -7,8 +7,8 @@ async function run() {
     core.info('running update-topics-from-pom');
 
     let topics = await getTopics();
-    core.info('here previous topics: ' + topics);
-    await addTopics("pippo");
+    core.info('here previous topics: ' + topics.names);
+    await addTopics(["pippo", "pluto"]);
     // await deleteLabel('add-pom-topics');
 
     topics = await getTopics();
