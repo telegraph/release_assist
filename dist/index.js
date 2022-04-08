@@ -5828,37 +5828,35 @@ function wrappy (fn, cb) {
 
 const github = __nccwpck_require__(739);
 const core = __nccwpck_require__(452);
-const oktokit = __nccwpck_require__(980);
 
 const token = core.getInput('repo-token');
-// const octokit = github.getOctokit(token);
+const octokit = github.getOctokit(token);
+const owner = github.context.payload.repository.owner.login;
+const repo = github.context.payload.repository.name;
 
 async function getTopics() {
-  const topics = oktokit.getAllTopics();
-  core.info(topics);
-  return topics;
+  return await octokit.request('GET /repos/{owner}/{repo}/topics', {
+    owner: owner,
+    repo: repo
+  })
 }
 
 async function replaceTopics(topics) {
-  return oktokit.replaceTopics(topics)
+  await octokit.request('PUT /repos/{owner}/{repo}/topics', {
+    owner: owner,
+    repo: repo,
+    names: topics
+  })
 }
 
 async function addTopics(topics) {
   const oldTopics = await getTopics();
-  return oktokit.replaceAllTopics(oldTopics + topics);
+  await replaceTopics(oldTopics + topics);
 }
 
 module.exports.getTopics = getTopics;
 module.exports.addTopics = addTopics;
 module.exports.replaceTopics = replaceTopics;
-
-
-/***/ }),
-
-/***/ 980:
-/***/ ((module) => {
-
-module.exports = eval("require")("@octokit/rest");
 
 
 /***/ }),
@@ -6018,15 +6016,19 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(452);
 const { deleteLabel } = __nccwpck_require__(828);
-const { addTopics } = __nccwpck_require__(493);
+const { getTopics, addTopics } = __nccwpck_require__(493);
 
 async function run() {
   try {
     core.info('running update-topics-from-pom');
 
-    const res = await addTopics("pippo");
-    await deleteLabel('add-pom-topics');
-    core.info(res);
+    let topics = await getTopics();
+    core.info('here previous topics: ' + topics);
+    await addTopics("pippo");
+    // await deleteLabel('add-pom-topics');
+
+    topics = await getTopics();
+    core.info('Topics now: ' + topics);
 
   } catch (error) {
       core.setFailed(error.message);
