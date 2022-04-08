@@ -15,12 +15,25 @@ async function getTopics() {
   })
 }
 
-async function replaceTopics(topics) {
-  await octokit.rest.repos.replaceAllTopics({
+async function replaceTopics(topicsReceived) {
+  const octokitt = new Octokit({
+    previews: ["mercy-preview"],
+  });
+  const {
+    data: { topics },
+  } = await octokitt.rest.repos.get({
     owner: owner,
     repo: repo,
-    names: topics
-  })
+    mediaType: {
+      previews: ["symmetra"],
+    },
+  });
+  octokitt.rest.repos.replaceAllTopics({
+    owner,
+    repo,
+    topics,
+  });
+
   // await octokit.request('PUT /repos/{owner}/{repo}/topics', {
   //   owner: owner,
   //   repo: repo,
