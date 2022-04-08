@@ -5835,6 +5835,7 @@ const owner = github.context.payload.repository.owner.login;
 const repo = github.context.payload.repository.name;
 
 async function getTopics() {
+  core.info("reading from: " + repo + "with owner: " + owner);
   return await octokit.request('GET /repos/{owner}/{repo}/topics', {
     owner: owner,
     repo: repo
@@ -6023,12 +6024,13 @@ async function run() {
     core.info('running update-topics-from-pom');
 
     let topics = await getTopics();
-    core.info('here previous topics: ' + topics.names);
-    await addTopics(["pippo", "pluto"]);
+    core.info('here previous topics: ');
+    core.info(topics);
+    // await addTopics(["pippo", "pluto"]);
     // await deleteLabel('add-pom-topics');
 
     topics = await getTopics();
-    core.info('Topics now: ' + topics);
+    core.info('Topics now: ' + topics.names);
 
   } catch (error) {
       core.setFailed(error.message);
