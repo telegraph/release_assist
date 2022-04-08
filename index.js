@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const { deleteLabel } = require('./labels');
-const { getTopics, addTopics } = require('./topics');
+const { getTopics, addTopics, replaceTopics } = require('./topics');
 
 async function run() {
   try {
@@ -8,7 +8,8 @@ async function run() {
 
     let topics = await getTopics();
     core.info('here previous topics: ' + topics.data.names);
-    await addTopics(["pippo", "pluto"]);
+    await replaceTopics(["pippo", "pluto"]);
+    // await addTopics(["pippo", "pluto"]);
     // await deleteLabel('add-pom-topics');
 
     topics = await getTopics();
