@@ -1,5 +1,6 @@
 const github = require('@actions/github');
 const core = require("@actions/core");
+const { request } = require("@octokit/request");
 
 const token = core.getInput('repo-token');
 const octokit = github.getOctokit(token);
@@ -15,22 +16,19 @@ async function getTopics() {
 }
 
 async function replaceTopics(topics) {
-  // await request('PUT /repos/{owner}/{repo}/topics', {
-  //   headers: {
-  //     authorization: tokenAuth,
-  //   },
-  //   owner: owner,
-  //   repo: repo,
-  //   names: topics
-  // });
-  await octokit.request('PUT /repos/{owner}/{repo}/topics', {
-    // headers: {
-    //   authorization: tokenAuth,
-    // },
+  await request('PUT /repos/{owner}/{repo}/topics', {
+    headers: {
+      authorization: tokenAuth,
+    },
     owner: owner,
     repo: repo,
     names: topics
-  })
+  });
+  // await octokit.request('PUT /repos/{owner}/{repo}/topics', {
+  //   owner: owner,
+  //   repo: repo,
+  //   names: topics
+  // })
 }
 
 async function addTopics(topics) {
