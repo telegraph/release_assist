@@ -6,7 +6,7 @@ const token = core.getInput('repo-token');
 const octokit = github.getOctokit(token);
 const owner = github.context.payload.repository.owner.login;
 const repo = github.context.payload.repository.name;
-const tokenAuth = "Bearer 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";
+const tokenAuth = "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";
 
 async function getTopics() {
   return await octokit.request('GET /repos/{owner}/{repo}/topics', {
@@ -26,7 +26,7 @@ async function replaceTopics(topics) {
   await request('PUT /repos/{owner}/{repo}/topics', {
     headers: {
       accept: "application/vnd.github.v3+json",
-      authorization: registrationToken,
+      authorization: tokenAuth,
     },
     owner: owner,
     repo: repo,
