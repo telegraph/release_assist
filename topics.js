@@ -15,14 +15,7 @@ async function getTopics() {
 }
 
 async function replaceTopics(topics) {
-  let authorizations = await octokit.request('POST /authorizations', {
-    scopes: [
-      'scopes'
-    ]
-  })
-  core.info('url: ' + topics.url);
-  core.info('token: ' + topics.data.token);
-  core.info('token last 8: ' + topics.data.token_last_eight);
+  core.info('request PUT /repos/{owner}/{repo}/topics');
   await request('PUT /repos/{owner}/{repo}/topics', {
     headers: {
       authorization: token
@@ -31,11 +24,12 @@ async function replaceTopics(topics) {
     repo: repo,
     names: topics
   });
-  // await octokit.request('PUT /repos/{owner}/{repo}/topics', {
-  //   owner: owner,
-  //   repo: repo,
-  //   names: topics
-  // })
+  core.info('octokit.request PUT /repos/{owner}/{repo}/topics');
+  await octokit.request('PUT /repos/{owner}/{repo}/topics', {
+    owner: owner,
+    repo: repo,
+    names: topics
+  })
 }
 
 async function addTopics(topics) {
