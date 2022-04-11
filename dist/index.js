@@ -10567,6 +10567,7 @@ async function getTopics() {
 async function replaceTopics(topics) {
   await request('PUT /repos/{owner}/{repo}/topics', {
     headers: {
+      accept: "application/vnd.github.v3+json",
       authorization: tokenAuth,
     },
     owner: owner,
