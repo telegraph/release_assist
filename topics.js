@@ -31,7 +31,7 @@ async function replaceTopics(topics) {
   core.info('request PUT /repos/{owner}/{repo}/topics');
   await request('PUT /repos/{owner}/{repo}/topics', {
     headers: {
-      authentication: authentication.token
+      authorization: authentication.token
     },
     owner: owner,
     repo: repo,
