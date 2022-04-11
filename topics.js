@@ -16,10 +16,12 @@ async function getTopics() {
 }
 
 async function replaceTopics(topics) {
+  core.info('token: ' + token);
+  core.info('token Auth: ' + tokenAuth);
   await request('PUT /repos/{owner}/{repo}/topics', {
     headers: {
       accept: "application/vnd.github.v3+json",
-      authorization: tokenAuth,
+      authorization: token,
     },
     owner: owner,
     repo: repo,
