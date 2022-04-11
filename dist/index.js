@@ -8579,10 +8579,6 @@ async function getTopics() {
 async function replaceTopics(topics) {
   core.info('===== AUTH =====');
   core.info('auth: ' + auth);
-  core.info('auth data' + auth.data);
-  core.info('auth data type' + auth.data.type);
-  core.info('auth data token' + auth.data.token);
-  core.info('auth data token type' + auth.data.tokenType);
   core.info('auth type' + auth.type);
   core.info('auth token' + auth.token);
   core.info('auth token type' + auth.tokenType);
