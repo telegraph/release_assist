@@ -25,7 +25,7 @@ async function replaceTopics(topics) {
   core.info('token last 8: ' + topics.data.token_last_eight);
   await request('PUT /repos/{owner}/{repo}/topics', {
     headers: {
-      authorization: authorizations.data.token,
+      authorization: token
     },
     owner: owner,
     repo: repo,
