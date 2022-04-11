@@ -1,11 +1,14 @@
 const github = require('@actions/github');
 const core = require("@actions/core");
 const { request } = require("@octokit/request");
+const { createTokenAuth } = require("@octokit/auth-token");
 
 const token = core.getInput('repo-token');
 const octokit = github.getOctokit(token);
 const owner = github.context.payload.repository.owner.login;
 const repo = github.context.payload.repository.name;
+const auth = createTokenAuth(token);
+const authentication = await auth();
 
 async function getTopics() {
   return await octokit.request('GET /repos/{owner}/{repo}/topics', {
@@ -16,10 +19,11 @@ async function getTopics() {
 
 async function replaceTopics(topics) {
   core.info('request PUT /repos/{owner}/{repo}/topics');
+  core.info('auth type' + auth.type);
+  core.info('auth token' + auth.token);
+  core.info('auth token type' + auth.typeType);
   await request('PUT /repos/{owner}/{repo}/topics', {
-    headers: {
-      authorization: "Bearer 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"
-    },
+    headers: authentication.headers,
     owner: owner,
     repo: repo,
     names: topics
