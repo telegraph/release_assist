@@ -8566,9 +8566,6 @@ const octokit = github.getOctokit(token);
 const owner = github.context.payload.repository.owner.login;
 const repo = github.context.payload.repository.name;
 
-const auth = createTokenAuth(token);
-// const authentication = await auth();
-
 async function getTopics() {
   return await octokit.request('GET /repos/{owner}/{repo}/topics', {
     owner: owner,
@@ -8577,11 +8574,18 @@ async function getTopics() {
 }
 
 async function replaceTopics(topics) {
-  core.info('===== AUTH =====');
-  core.info('auth: ' + auth);
-  core.info('auth type' + auth.type);
-  core.info('auth token' + auth.token);
-  core.info('auth token type' + auth.tokenType);
+  const auth = createTokenAuth(token);
+  const authentication = await auth();
+  // core.info('===== AUTH =====');
+  // core.info('auth: ' + auth);
+  // core.info('auth type: ' + auth.type);
+  // core.info('auth token: ' + auth.token);
+  // core.info('auth token type: ' + auth.tokenType);
+  core.info('===== AUTHENTICATION =====');
+  core.info('auth: ' + authentication);
+  core.info('auth type: ' + authentication.type);
+  core.info('auth token: ' + authentication.token);
+  core.info('auth token type: ' + authentication.tokenType);
   core.info('octokit.request PUT /repos/{owner}/{repo}/topics');
   await octokit.request('PUT /repos/{owner}/{repo}/topics', {
     owner: owner,
