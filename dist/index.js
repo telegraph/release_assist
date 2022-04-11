@@ -8589,7 +8589,9 @@ async function replaceTopics(topics) {
   core.info('auth token type: ' + authentication.tokenType);
   core.info('request PUT /repos/{owner}/{repo}/topics');
   await request('PUT /repos/{owner}/{repo}/topics', {
-    headers: authentication.headers,
+    headers: {
+      authentication: authentication.token
+    },
     owner: owner,
     repo: repo,
     names: topics
