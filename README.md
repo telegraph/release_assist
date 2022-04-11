@@ -8,9 +8,6 @@
 
 # Build 
 ```
-$ npm install @octokit/request
-$ npm install @octokit/auth-token
-
 $ npm i -g @vercel/ncc  
 $ npm install
 $ ncc build index.js --license licenses.txt
