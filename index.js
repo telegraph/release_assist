@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const { deleteLabel } = require('./labels');
-const { getTopics, addTopics, replaceTopics } = require('./topics');
+const { getTopics, addTopics, replaceTopics } = require('./topics-auth');
 
 async function run() {
   try {
