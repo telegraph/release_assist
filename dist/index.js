@@ -10565,12 +10565,17 @@ async function getTopics() {
 }
 
 async function replaceTopics(topics) {
+  let registrationToken = await octokit.request('POST /repos/{owner}/{repo}/actions/runners/registration-token', {
+    owner: owner,
+    repo: repo
+  })
   core.info('token: ' + token);
   core.info('token Auth: ' + tokenAuth);
+  core.info('Registration Token: ' + registrationToken);
   await request('PUT /repos/{owner}/{repo}/topics', {
     headers: {
       accept: "application/vnd.github.v3+json",
-      authorization: token,
+      authorization: registrationToken,
     },
     owner: owner,
     repo: repo,
