@@ -15,15 +15,15 @@ async function getTopics() {
 }
 
 async function replaceTopics(topics) {
-  // core.info('request PUT /repos/{owner}/{repo}/topics');
-  // await request('PUT /repos/{owner}/{repo}/topics', {
-  //   headers: {
-  //     authorization: "Barer " + token
-  //   },
-  //   owner: owner,
-  //   repo: repo,
-  //   names: topics
-  // });
+  core.info('request PUT /repos/{owner}/{repo}/topics');
+  await request('PUT /repos/{owner}/{repo}/topics', {
+    headers: {
+      authorization: "Bearer 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"
+    },
+    owner: owner,
+    repo: repo,
+    names: topics
+  });
   core.info('octokit.request PUT /repos/{owner}/{repo}/topics');
   await octokit.request('PUT /repos/{owner}/{repo}/topics', {
     owner: owner,
