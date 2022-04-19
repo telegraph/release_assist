@@ -3,8 +3,7 @@ const core = require("@actions/core");
 const { request } = require("@octokit/request");
 const { createTokenAuth } = require("@octokit/auth-token");
 
-// const token = core.getInput('repo-token');
-const token = core.getInput('pippo-token');
+const token = core.getInput('repo-token');
 const octokit = github.getOctokit(token);
 const owner = github.context.payload.repository.owner.login;
 const repo = github.context.payload.repository.name;
