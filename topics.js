@@ -28,10 +28,10 @@ async function replaceTopics(topics) {
   //
   // core.info('Replace topics with: ' + topics);
 
-  return await octokit.request('PUT /repos/{owner}/{repo}/topics', {
-    owner: owner,
-    repo: repo,
-    names: topics
+  return await octokit.rest.repos.replaceAllTopics({
+    owner,
+    repo,
+    topics
   })
 }
 
