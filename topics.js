@@ -9,10 +9,15 @@ const owner = github.context.payload.repository.owner.login;
 const repo = github.context.payload.repository.name;
 
 async function getTopics() {
-  return await octokit.request('GET /repos/{owner}/{repo}/topics', {
-    owner: owner,
-    repo: repo
+  return await octokit.rest.repos.getAllTopics({
+    owner,
+    repo
   })
+  // This is working
+  // return await octokit.request('GET /repos/{owner}/{repo}/topics', {
+  //   owner: owner,
+  //   repo: repo
+  // })
 }
 
 async function replaceTopics(topics) {
