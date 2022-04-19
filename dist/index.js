@@ -8588,10 +8588,6 @@ async function replaceTopics(topics) {
   core.info('Replace topics with: ' + topics);
 
   return await request('PUT /repos/{owner}/{repo}/topics', {
-    headers: {
-      accept: "application/vnd.github.v3+json",
-      authorization: authentication.token
-    },
     owner: owner,
     repo: repo,
     names: topics
