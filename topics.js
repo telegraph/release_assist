@@ -9,6 +9,7 @@ const owner = github.context.payload.repository.owner.login;
 const repo = github.context.payload.repository.name;
 
 async function getTopics() {
+  core.info('=== GET TOPICS ===');
   return await octokit.rest.repos.getAllTopics({
     owner,
     repo
@@ -37,6 +38,7 @@ async function replaceTopics(topics) {
   // core.info('auth token type: ' + authentication.tokenType);
   // core.info('request PUT /repos/{owner}/{repo}/topics');
 
+  core.info('=== REPLACE TOPICS ===');
   core.info('You want this topics');
   core.info(topics);
 
