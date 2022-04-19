@@ -8576,12 +8576,9 @@ async function getTopics() {
 
 async function replaceTopics(topics) {
 
-  core.info("Owner: " + owner)
-  core.info("repo: " + repo)
   core.info("Authenticating...")
-  const regToken = await octokit.request('POST /orgs/{org}/actions/runners/registration-token', {
-    org: owner
-  })
+  const auth = createTokenAuth(token);
+  const authentication = await auth();
 
   core.info("Authentication Token");
   core.info("token: " + regToken.token);
