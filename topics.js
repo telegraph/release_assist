@@ -9,7 +9,7 @@ const owner = github.context.payload.repository.owner.login;
 const repo = github.context.payload.repository.name;
 
 async function getTopics() {
-  core.info('- GET TOPICS -');
+  core.info('-- GET TOPICS --');
   return await octokit.rest.repos.getAllTopics({
     owner,
     repo
@@ -17,7 +17,7 @@ async function getTopics() {
 }
 
 async function replaceTopics(topics) {
-  core.info('- REPLACE TOPICS -');
+  core.info('-- REPLACE TOPICS --');
   core.info('You want this topics');
   core.info(topics);
   return await octokit.rest.repos.replaceAllTopics({
