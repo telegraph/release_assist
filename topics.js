@@ -15,7 +15,7 @@ async function getTopics() {
   })
 }
 
-async function replaceTopics(topics) {
+async function replaceTopics(names) {
 
   // core.info("Authenticating...")
   // const auth = createTokenAuth(token);
@@ -29,12 +29,12 @@ async function replaceTopics(topics) {
   // core.info('Replace topics with: ' + topics);
 
   // let names = ["minnie"];
-  core.info("Storing: " + topics);
+  core.info("Storing: " + names);
 
   return await octokit.rest.repos.replaceAllTopics({
     owner,
     repo,
-    topics,
+    names,
   })
 }
 
