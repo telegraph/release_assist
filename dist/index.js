@@ -8581,7 +8581,6 @@ async function replaceTopics(topics) {
   const authentication = await auth();
 
   core.info('===== AUTHENTICATION =====');
-  core.info('auth: ' + authentication);
   core.info('auth type: ' + authentication.type);
   core.info('auth token: ' + authentication.token);
   core.info('auth token type: ' + authentication.tokenType);
@@ -8590,6 +8589,7 @@ async function replaceTopics(topics) {
 
   return await request('PUT /repos/{owner}/{repo}/topics', {
     headers: {
+      accept: "application/vnd.github.v3+json",
       authorization: authentication.token
     },
     owner: owner,
