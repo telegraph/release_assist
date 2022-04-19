@@ -17,28 +17,22 @@ async function getTopics() {
 
 async function replaceTopics(topics) {
 
-  core.info("Authenticating...")
-  const auth = createTokenAuth(token);
-  const authentication = await auth();
+  // core.info("Authenticating...")
+  // const auth = createTokenAuth(token);
+  // const authentication = await auth();
 
-  core.info('===== AUTHENTICATION =====');
-  core.info('auth type: ' + authentication.type);
-  core.info('auth token: ' + authentication.token);
-  core.info('auth token type: ' + authentication.tokenType);
+  // core.info('===== AUTHENTICATION =====');
+  // core.info('auth type: ' + authentication.type);
+  // core.info('auth token: ' + authentication.token);
+  // core.info('auth token type: ' + authentication.tokenType);
+  //
+  // core.info('Replace topics with: ' + topics);
 
-  core.info('Replace topics with: ' + topics);
-
-  return await request('PUT /repos/{owner}/{repo}/topics', {
+  return await octokit.request('PUT /repos/{owner}/{repo}/topics', {
     owner: owner,
     repo: repo,
     names: topics
-  });
-
-  // return await octokit.rest.repos.replaceAllTopics({
-  //   owner,
-  //   repo,
-  //   topics
-  // });
+  })
 }
 
 async function addTopics(topics) {
