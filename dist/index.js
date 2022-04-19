@@ -8587,10 +8587,13 @@ async function replaceTopics(topics) {
   //
   // core.info('Replace topics with: ' + topics);
 
+  let names = ["minnie"];
+  core.info("Storing: " + names);
+
   return await octokit.rest.repos.replaceAllTopics({
     owner,
     repo,
-    topics
+    names,
   })
 }
 
@@ -8787,7 +8790,7 @@ async function run() {
     await replaceTopics(["pippo", "pluto"]);
     // await addTopics(["pippo", "pluto"]);
     // await deleteLabel('add-pom-topics');
-
+    core.info('After replace');
     topics = await getTopics();
     core.info('Topics now: ' + topics.data.names);
 

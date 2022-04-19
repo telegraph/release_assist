@@ -11,7 +11,7 @@ async function run() {
     await replaceTopics(["pippo", "pluto"]);
     // await addTopics(["pippo", "pluto"]);
     // await deleteLabel('add-pom-topics');
-
+    core.info('After replace');
     topics = await getTopics();
     core.info('Topics now: ' + topics.data.names);
 

@@ -28,10 +28,13 @@ async function replaceTopics(topics) {
   //
   // core.info('Replace topics with: ' + topics);
 
+  let names = ["minnie"];
+  core.info("Storing: " + names);
+
   return await octokit.rest.repos.replaceAllTopics({
     owner,
     repo,
-    topics
+    names,
   })
 }
 
