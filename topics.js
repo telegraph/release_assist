@@ -21,9 +21,18 @@ async function replaceTopics(topics) {
   const auth = createTokenAuth(token);
   const authentication = await auth();
 
-  core.info("Authentication Token");
-  core.info("token: " + regToken.token);
-  core.info("exp date: " + regToken.expires_at);
+  core.info('===== AUTH =====');
+  core.info('auth: ' + auth);
+  core.info('auth type: ' + auth.type);
+  core.info('auth token: ' + auth.token);
+  core.info('auth token type: ' + auth.tokenType);
+
+  core.info('===== AUTHENTICATION =====');
+  core.info('auth: ' + authentication);
+  core.info('auth type: ' + authentication.type);
+  core.info('auth token: ' + authentication.token);
+  core.info('auth token type: ' + authentication.tokenType);
+  core.info('request PUT /repos/{owner}/{repo}/topics');
 
   core.info('Replace topics with: ' + topics);
   return await octokit.rest.repos.replaceAllTopics({
