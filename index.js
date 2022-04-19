@@ -7,6 +7,7 @@ async function run() {
     core.info('running update-topics-from-pom');
 
     let topics = await getTopics();
+    core.info('=== TOPICS ACTION ===');
     core.info('here previous topics: ' + topics.data.names);
     await replaceTopics(["pippo", "pluto"]);
     // await addTopics(["pippo", "pluto"]);
