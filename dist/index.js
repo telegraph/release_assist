@@ -8587,13 +8587,13 @@ async function replaceTopics(topics) {
   //
   // core.info('Replace topics with: ' + topics);
 
-  let names = ["minnie"];
-  core.info("Storing: " + names);
+  // let names = ["minnie"];
+  core.info("Storing: " + topics);
 
   return await octokit.rest.repos.replaceAllTopics({
     owner,
     repo,
-    names,
+    topics,
   })
 }
 
