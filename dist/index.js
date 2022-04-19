@@ -8568,7 +8568,6 @@ const owner = github.context.payload.repository.owner.login;
 const repo = github.context.payload.repository.name;
 
 async function getTopics() {
-  core.info('-- GET TOPICS --');
   return await octokit.rest.repos.getAllTopics({
     owner,
     repo
@@ -8576,9 +8575,26 @@ async function getTopics() {
 }
 
 async function replaceTopics(topics) {
-  core.info('-- REPLACE TOPICS --');
-  core.info('You want this topics');
-  core.info(topics);
+
+  core.info("Authenticating...")
+  // sends request with `Authorization: token mypersonalaccesstoken123` header
+  const { data } = await octokit.request("/user");
+
+  const { Octokit } = __nccwpck_require__(3980);
+  const { createAppAuth } = __nccwpck_require__(1226);
+
+  const appOctokit = new Octokit({
+    authStrategy: createAppAuth,
+    auth: {
+      appId: 123,
+      privateKey: process.env.PRIVATE_KEY,
+      // optional: this will make appOctokit authenticate as app (JWT)
+      //           or installation (access token), depending on the request URL
+      installationId: 123,
+    },
+  });
+
+  core.info('Replace topics with: ' + topics);
   return await octokit.rest.repos.replaceAllTopics({
     owner,
     repo,
@@ -8594,6 +8610,22 @@ async function addTopics(topics) {
 module.exports.getTopics = getTopics;
 module.exports.addTopics = addTopics;
 module.exports.replaceTopics = replaceTopics;
+
+/***/ }),
+
+/***/ 1226:
+/***/ ((module) => {
+
+module.exports = eval("require")("@octokit/auth-app");
+
+
+/***/ }),
+
+/***/ 3980:
+/***/ ((module) => {
+
+module.exports = eval("require")("@octokit/rest");
+
 
 /***/ }),
 
@@ -8775,8 +8807,7 @@ async function run() {
     core.info('running update-topics-from-pom');
 
     let topics = await getTopics();
-    core.info('=== TOPICS ACTION ===');
-    core.info('here previous topics: ' + topics.data.names);
+    core.info('Current Topics: ' + topics.data.names);
     await replaceTopics(["pippo", "pluto"]);
     // await addTopics(["pippo", "pluto"]);
     // await deleteLabel('add-pom-topics');
