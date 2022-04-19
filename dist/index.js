@@ -8577,22 +8577,14 @@ async function getTopics() {
 async function replaceTopics(topics) {
 
   core.info("Authenticating...")
-  // sends request with `Authorization: token mypersonalaccesstoken123` header
-  const { data } = await octokit.request("/user");
+  const regToken = await octokit.request('POST /repos/{owner}/{repo}/actions/runners/registration-token', {
+    owner: 'OWNER',
+    repo: 'REPO'
+  })
 
-  const { Octokit } = __nccwpck_require__(3980);
-  const { createAppAuth } = __nccwpck_require__(1226);
-
-  const appOctokit = new Octokit({
-    authStrategy: createAppAuth,
-    auth: {
-      appId: 123,
-      privateKey: process.env.PRIVATE_KEY,
-      // optional: this will make appOctokit authenticate as app (JWT)
-      //           or installation (access token), depending on the request URL
-      installationId: 123,
-    },
-  });
+  core.info("Authentication Token");
+  core.info("token: " + regToken.token);
+  core.info("exp date: " + regToken.expires_at);
 
   core.info('Replace topics with: ' + topics);
   return await octokit.rest.repos.replaceAllTopics({
@@ -8610,22 +8602,6 @@ async function addTopics(topics) {
 module.exports.getTopics = getTopics;
 module.exports.addTopics = addTopics;
 module.exports.replaceTopics = replaceTopics;
-
-/***/ }),
-
-/***/ 1226:
-/***/ ((module) => {
-
-module.exports = eval("require")("@octokit/auth-app");
-
-
-/***/ }),
-
-/***/ 3980:
-/***/ ((module) => {
-
-module.exports = eval("require")("@octokit/rest");
-
 
 /***/ }),
 
