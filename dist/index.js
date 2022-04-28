@@ -8583,7 +8583,7 @@ async function replaceTopics(names) {
 
 async function addTopics(topics) {
   const oldTopics = await getTopics();
-  let topicsToAdd = oldTopics.data.names + topics;
+  let topicsToAdd = oldTopics.data.names.concat(topics);
   await replaceTopics(topicsToAdd);
 }
 
@@ -8768,8 +8768,7 @@ const { getTopics, addTopics, replaceTopics } = __nccwpck_require__(8493);
 
 async function run() {
   try {
-    core.info('running update-topics-from-pom');
-
+    core.info('running update-topics');
     let topics = await getTopics();
     core.info('=== Current Topics: ' + topics.data.names);
     await replaceTopics(["pippo", "pluto"]);

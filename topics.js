@@ -24,7 +24,7 @@ async function replaceTopics(names) {
 
 async function addTopics(topics) {
   const oldTopics = await getTopics();
-  let topicsToAdd = oldTopics.data.names + topics;
+  let topicsToAdd = oldTopics.data.names.concat(topics);
   await replaceTopics(topicsToAdd);
 }
 

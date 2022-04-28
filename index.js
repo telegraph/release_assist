@@ -4,8 +4,7 @@ const { getTopics, addTopics, replaceTopics } = require('./topics');
 
 async function run() {
   try {
-    core.info('running update-topics-from-pom');
-
+    core.info('running update-topics');
     let topics = await getTopics();
     core.info('=== Current Topics: ' + topics.data.names);
     await replaceTopics(["pippo", "pluto"]);
