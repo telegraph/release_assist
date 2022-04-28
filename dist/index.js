@@ -8557,13 +8557,11 @@ function wrappy (fn, cb) {
 /***/ 4105:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-const core = __nccwpck_require__(452);
 const { promises: fs } = __nccwpck_require__(7147)
 
 async function readFile(path) {
     let content = await fs.readFile(path, 'utf8')
-    core.info(" === FILE");
-    core.info(content);
+    return content;
 }
 
 module.exports.readFile = readFile;
@@ -8800,7 +8798,6 @@ async function run() {
     // core.info('=== After adding topics');
     // topics = await getTopics();
     // core.info('Topics now: ' + topics.data.names);
-    core.info('=== CONTENT: ');
     let topics = await readFile(path);
     core.info(topics);
 
