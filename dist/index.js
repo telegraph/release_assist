@@ -8799,7 +8799,7 @@ async function run() {
     // topics = await getTopics();
     // core.info('Topics now: ' + topics.data.names);
     core.info("Previous Topics: " + (await getTopics()).data.names);
-    let topics = ((await readFile(path)).trim).split(/\r?\n/);
+    let topics = (await readFile(path)).trim().split(/\r?\n/);
     core.info("Topics to add: " + topics);
     await addTopics(topics);
     core.info("Current Topics: " + (await getTopics()).data.names);
