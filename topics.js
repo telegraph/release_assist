@@ -1,7 +1,5 @@
 const github = require('@actions/github');
 const core = require("@actions/core");
-const { request } = require("@octokit/request");
-const { createTokenAuth } = require("@octokit/auth-token");
 
 const token = core.getInput('repo-token');
 const octokit = github.getOctokit(token);
@@ -17,20 +15,7 @@ async function getTopics() {
 
 async function replaceTopics(names) {
 
-  // core.info("Authenticating...")
-  // const auth = createTokenAuth(token);
-  // const authentication = await auth();
-
-  // core.info('===== AUTHENTICATION =====');
-  // core.info('auth type: ' + authentication.type);
-  // core.info('auth token: ' + authentication.token);
-  // core.info('auth token type: ' + authentication.tokenType);
-  //
-  // core.info('Replace topics with: ' + topics);
-
-  // let names = ["minnie"];
   core.info("Storing: " + names);
-
   return await octokit.rest.repos.replaceAllTopics({
     owner,
     repo,
