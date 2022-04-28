@@ -8554,6 +8554,22 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 4105:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+const core = __nccwpck_require__(452);
+const { promises: fs } = __nccwpck_require__(7147)
+
+async function readFile(path) {
+    let content = await fs.readFile(path, 'utf8')
+    core.info(" === FILE");
+    core.info(content);
+}
+
+module.exports.readFile = readFile;
+
+/***/ }),
+
 /***/ 8493:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
@@ -8764,10 +8780,10 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(452);
 const { deleteLabel } = __nccwpck_require__(8828);
-// const { readFile } = require('./read_file');
+const { readFile } = __nccwpck_require__(4105);
 const { getTopics, addTopics, replaceTopics } = __nccwpck_require__(8493);
 
-const content = core.getInput('topics');
+const path = core.getInput('path');
 
 async function run() {
   try {
@@ -8785,8 +8801,8 @@ async function run() {
     // topics = await getTopics();
     // core.info('Topics now: ' + topics.data.names);
     core.info('=== CONTENT: ');
-    // await readFile(path);
-    core.info(content);
+    let topics = await readFile(path);
+    core.info(topics);
 
   } catch (error) {
       core.setFailed(error.message);
