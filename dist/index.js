@@ -8560,8 +8560,7 @@ function wrappy (fn, cb) {
 const core = __nccwpck_require__(452);
 const { promises: fs } = __nccwpck_require__(7147)
 
-async function readFile() {
-    const path = core.getInput('path');
+async function readFile(path) {
     let content = await fs.readFile(path, 'utf8')
     core.info(" === FILE");
     core.info(content);
@@ -8782,9 +8781,25 @@ const { deleteLabel } = __nccwpck_require__(8828);
 const { readFile } = __nccwpck_require__(4105);
 const { getTopics, addTopics, replaceTopics } = __nccwpck_require__(8493);
 
+const path = core.getInput('path');
+
 async function run() {
   try {
+
     core.info('running update-topics');
+    // let topics = await getTopics();
+    // core.info('=== Current Topics: ' + topics.data.names);
+    // await replaceTopics(["pippo", "pluto"]);
+    // // await deleteLabel('add-pom-topics');
+    // core.info('=== After replace');
+    // topics = await getTopics();
+    // core.info('Topics now: ' + topics.data.names);
+    // await addTopics(["pippo-2", "pluto-2"]);
+    // core.info('=== After adding topics');
+    // topics = await getTopics();
+    // core.info('Topics now: ' + topics.data.names);
+    core.info('=== READ FILE: ');
+    readFile(path);
 
   } catch (error) {
       core.setFailed(error.message);
