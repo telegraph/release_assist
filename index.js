@@ -11,10 +11,15 @@ async function run() {
     core.info("Previous Topics: " + (await getTopics()).data.names);
     let topics = (await readFile(path)).trim().split(/\r?\n/);
     core.info("Topics to add: " + topics);
-    if(replace)
+    core.info("replace: " + replace);
+    if(replace) {
+      core.info("==> Doing Replace topics");
       await replaceTopics(topics)
-    else
+    }
+    else {
+      core.info("==> Doing add topics");
       await addTopics(topics);
+    }
     core.info("Current Topics: " + (await getTopics()).data.names);
   } catch (error) {
       core.setFailed(error.message);
