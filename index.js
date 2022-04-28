@@ -20,7 +20,6 @@ async function run() {
     // core.info('=== After adding topics');
     // topics = await getTopics();
     // core.info('Topics now: ' + topics.data.names);
-    core.info('=== CONTENT: ');
     let topics = await readFile(path);
     core.info(topics);
 
