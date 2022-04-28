@@ -8559,8 +8559,6 @@ function wrappy (fn, cb) {
 
 const github = __nccwpck_require__(1739);
 const core = __nccwpck_require__(452);
-const { request } = __nccwpck_require__(6247);
-const { createTokenAuth } = __nccwpck_require__(2057);
 
 const token = core.getInput('repo-token');
 const octokit = github.getOctokit(token);
@@ -8576,20 +8574,7 @@ async function getTopics() {
 
 async function replaceTopics(names) {
 
-  // core.info("Authenticating...")
-  // const auth = createTokenAuth(token);
-  // const authentication = await auth();
-
-  // core.info('===== AUTHENTICATION =====');
-  // core.info('auth type: ' + authentication.type);
-  // core.info('auth token: ' + authentication.token);
-  // core.info('auth token type: ' + authentication.tokenType);
-  //
-  // core.info('Replace topics with: ' + topics);
-
-  // let names = ["minnie"];
   core.info("Storing: " + names);
-
   return await octokit.rest.repos.replaceAllTopics({
     owner,
     repo,
@@ -8788,9 +8773,12 @@ async function run() {
     let topics = await getTopics();
     core.info('Current Topics: ' + topics.data.names);
     await replaceTopics(["pippo", "pluto"]);
-    // await addTopics(["pippo", "pluto"]);
     // await deleteLabel('add-pom-topics');
     core.info('After replace');
+    topics = await getTopics();
+    core.info('Topics now: ' + topics.data.names);
+    await addTopics(["pippo-2", "pluto-2"]);
+    core.info('After adding topics');
     topics = await getTopics();
     core.info('Topics now: ' + topics.data.names);
 
