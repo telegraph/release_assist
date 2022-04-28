@@ -8555,7 +8555,7 @@ function wrappy (fn, cb) {
 /***/ }),
 
 /***/ 4105:
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __nccwpck_require__) => {
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 const core = __nccwpck_require__(452);
 const { promises: fs } = __nccwpck_require__(7147)
@@ -8565,6 +8565,8 @@ async function readFile(path) {
     core.info(" === FILE");
     core.info(content);
 }
+
+module.exports.readFile = readFile;
 
 /***/ }),
 

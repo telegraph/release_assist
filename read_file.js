@@ -6,3 +6,5 @@ async function readFile(path) {
     core.info(" === FILE");
     core.info(content);
 }
+
+module.exports.readFile = readFile;
