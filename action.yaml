@@ -1,5 +1,5 @@
-name: 'Update topics from pom'
-description: 'Updates topics reading from the pom in the root'
+name: 'Update topics'
+description: 'Updates topics reading from file'
 inputs:
   repo-token:
     description: 'Github token used to access github api with writing permissions. should be secrets.WRITING'
