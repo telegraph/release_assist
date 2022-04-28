@@ -7,9 +7,14 @@ inputs:
   path:
     description: 'path to topics file'
     required: true
-  replace:
+  replace-topics:
     description: 'Boolean to delete the old topics or to keep them'
     required: false
+    default: false
+  is-pom:
+    description: 'Boolean that describe the file is a pom'
+    required: false
+    default: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
