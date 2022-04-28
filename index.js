@@ -20,11 +20,11 @@ async function run() {
     // core.info('=== After adding topics');
     // topics = await getTopics();
     // core.info('Topics now: ' + topics.data.names);
-    core.info("Previous Topics: " + await getTopics());
-    let topics = (await readFile(path)).trim.split(/\r?\n/);
+    core.info("Previous Topics: " + (await getTopics()).data.names);
+    let topics = ((await readFile(path)).trim).split(/\r?\n/);
     core.info("Topics to add: " + topics);
     await addTopics(topics);
-    core.info("Current Topics: " + await getTopics());
+    core.info("Current Topics: " + (await getTopics()).data.names);
     core.info( await getTopics());
 
   } catch (error) {
