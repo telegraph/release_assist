@@ -8732,7 +8732,7 @@ async function run() {
   try {
     core.info('running update-topics');
     core.info("Previous Topics: " + (await getTopics()).data.names);
-    let topics = (await readFile(path)).trim().split(/\r?\n/);
+    let topics = (await readFile(path)).replace(" ", "-").split(/\r?\n/);
     core.info("Topics to add: " + topics);
     core.info("replace: " + replace);
     if(replace) {
