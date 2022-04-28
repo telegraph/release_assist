@@ -8767,7 +8767,7 @@ const { deleteLabel } = __nccwpck_require__(8828);
 // const { readFile } = require('./read_file');
 const { getTopics, addTopics, replaceTopics } = __nccwpck_require__(8493);
 
-const content = core.getInput('content');
+const content = core.getInput('topics');
 
 async function run() {
   try {

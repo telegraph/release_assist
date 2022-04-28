@@ -3,7 +3,7 @@ const { deleteLabel } = require('./labels');
 // const { readFile } = require('./read_file');
 const { getTopics, addTopics, replaceTopics } = require('./topics');
 
-const content = core.getInput('content');
+const content = core.getInput('topics');
 
 async function run() {
   try {

@@ -4,8 +4,8 @@ inputs:
   repo-token:
     description: 'Github token used to access github api with writing permissions. should be secrets.WRITING'
     required: true
-  content:
-    description: 'Content'
+  topics:
+    description: 'topics'
     required: true
 runs:
   using: 'node12'
