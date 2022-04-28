@@ -1,9 +1,9 @@
 const core = require('@actions/core');
 const { deleteLabel } = require('./labels');
-const { readFile } = require('./read_file');
+// const { readFile } = require('./read_file');
 const { getTopics, addTopics, replaceTopics } = require('./topics');
 
-const path = core.getInput('path');
+const content = core.getInput('content');
 
 async function run() {
   try {
@@ -20,8 +20,9 @@ async function run() {
     // core.info('=== After adding topics');
     // topics = await getTopics();
     // core.info('Topics now: ' + topics.data.names);
-    core.info('=== READ FILE: ');
-    await readFile(path);
+    core.info('=== CONTENT: ');
+    // await readFile(path);
+    core.info(content);
 
   } catch (error) {
       core.setFailed(error.message);

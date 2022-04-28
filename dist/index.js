@@ -8554,22 +8554,6 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 4105:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-const core = __nccwpck_require__(452);
-const { promises: fs } = __nccwpck_require__(7147)
-
-async function readFile(path) {
-    let content = await fs.readFile(path, 'utf8')
-    core.info(" === FILE");
-    core.info(content);
-}
-
-module.exports.readFile = readFile;
-
-/***/ }),
-
 /***/ 8493:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
@@ -8780,10 +8764,10 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(452);
 const { deleteLabel } = __nccwpck_require__(8828);
-const { readFile } = __nccwpck_require__(4105);
+// const { readFile } = require('./read_file');
 const { getTopics, addTopics, replaceTopics } = __nccwpck_require__(8493);
 
-const path = core.getInput('path');
+const content = core.getInput('content');
 
 async function run() {
   try {
@@ -8800,8 +8784,9 @@ async function run() {
     // core.info('=== After adding topics');
     // topics = await getTopics();
     // core.info('Topics now: ' + topics.data.names);
-    core.info('=== READ FILE: ');
-    await readFile(path);
+    core.info('=== CONTENT: ');
+    // await readFile(path);
+    core.info(content);
 
   } catch (error) {
       core.setFailed(error.message);
