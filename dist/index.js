@@ -8798,8 +8798,12 @@ async function run() {
     // core.info('=== After adding topics');
     // topics = await getTopics();
     // core.info('Topics now: ' + topics.data.names);
-    let topics = (await readFile(path)).split(/\r?\n/);
-    core.info(topics);
+    core.info("Previous Topics: " + await getTopics());
+    let topics = (await readFile(path)).trim.split(/\r?\n/);
+    core.info("Topics to add: " + topics);
+    await addTopics(topics);
+    core.info("Current Topics: " + await getTopics());
+    core.info( await getTopics());
 
   } catch (error) {
       core.setFailed(error.message);
