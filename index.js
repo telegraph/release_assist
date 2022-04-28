@@ -20,7 +20,7 @@ async function run() {
     // core.info('=== After adding topics');
     // topics = await getTopics();
     // core.info('Topics now: ' + topics.data.names);
-    let topics = await readFile(path);
+    let topics = (await readFile(path)).split(/\r?\n/);
     core.info(topics);
 
   } catch (error) {
