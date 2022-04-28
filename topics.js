@@ -14,8 +14,7 @@ async function getTopics() {
 }
 
 async function replaceTopics(names) {
-
-  core.info("Storing: " + names);
+  core.info("Saving: " + names);
   return await octokit.rest.repos.replaceAllTopics({
     owner,
     repo,
@@ -25,7 +24,8 @@ async function replaceTopics(names) {
 
 async function addTopics(topics) {
   const oldTopics = await getTopics();
-  await replaceTopics(oldTopics.data.names + topics);
+  let topicsToAdd = oldTopics.data.names + topics;
+  await replaceTopics(topicsToAdd);
 }
 
 module.exports.getTopics = getTopics;
