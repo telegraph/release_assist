@@ -1,61 +1,6 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 8828:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-const core = __nccwpck_require__(452);
-const github = __nccwpck_require__(1739);
-
-const token = core.getInput('repo-token');
-const octokit = github.getOctokit(token);
-const owner = github.context.payload.repository.owner.login;
-const repo = github.context.payload.repository.name;
-const pullRequestNumber = github.context.payload.pull_request.number;
-
-async function deleteLabel(labelName) {
-  // get draft release from label
-  const labels_response = await octokit.issues.listLabelsOnIssue({
-    owner: owner,
-    repo: repo,
-    issue_number: pullRequestNumber
-  });
-
-  if (labels_response.data.length > 0) {
-    let label = labels_response.data.find(label => label.name.includes(labelName));
-    if (typeof label !== 'undefined') {
-      //delete draft label
-      await octokit.issues.deleteLabel({
-        owner: owner,
-        repo: repo,
-        name: label.name
-      });
-      core.info('label ' + label.name + ' deleted')
-      return;
-    } else {
-      core.info('label ' + label.name + ' not found')
-      return null;
-    }
-  } else {
-    core.info('no labels where found')
-    return null;
-  }
-}
-
-async function updateRelease(releaseNumber, tagName) {
-  return octokit.repos.updateRelease({
-    owner: owner,
-    repo: repo,
-    name: tagName,
-    release_id: releaseNumber,
-    draft: false
-  });
-}
-
-module.exports.deleteLabel = deleteLabel;
-
-/***/ }),
-
 /***/ 4143:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -8777,34 +8722,23 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 const core = __nccwpck_require__(452);
-const { deleteLabel } = __nccwpck_require__(8828);
 const { readFile } = __nccwpck_require__(4105);
 const { getTopics, addTopics, replaceTopics } = __nccwpck_require__(8493);
 
 const path = core.getInput('path');
+const replace = core.getInput('replace');
 
 async function run() {
   try {
-
     core.info('running update-topics');
-    // let topics = await getTopics();
-    // core.info('=== Current Topics: ' + topics.data.names);
-    // await replaceTopics(["pippo", "pluto"]);
-    // // await deleteLabel('add-pom-topics');
-    // core.info('=== After replace');
-    // topics = await getTopics();
-    // core.info('Topics now: ' + topics.data.names);
-    // await addTopics(["pippo-2", "pluto-2"]);
-    // core.info('=== After adding topics');
-    // topics = await getTopics();
-    // core.info('Topics now: ' + topics.data.names);
     core.info("Previous Topics: " + (await getTopics()).data.names);
     let topics = (await readFile(path)).trim().split(/\r?\n/);
     core.info("Topics to add: " + topics);
-    await addTopics(topics);
+    if(replace)
+      await replaceTopics(topics)
+    else
+      await addTopics(topics);
     core.info("Current Topics: " + (await getTopics()).data.names);
-    core.info( await getTopics());
-
   } catch (error) {
       core.setFailed(error.message);
   }
