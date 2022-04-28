@@ -21,7 +21,7 @@ async function run() {
     // topics = await getTopics();
     // core.info('Topics now: ' + topics.data.names);
     core.info('=== READ FILE: ');
-    readFile(path);
+    await readFile(path);
 
   } catch (error) {
       core.setFailed(error.message);
