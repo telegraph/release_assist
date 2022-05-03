@@ -8756,7 +8756,7 @@ async function run() {
         let newTopics = (await readFile(paths[index])).replace(" ", "-").split(/\r?\n/);
         core.info("New Topics: " + newTopics);
         if(topics != "")
-          topics = topics + "," + newTopics;
+          topics = topics + " " + newTopics;
         else
           topics = newTopics;
         // topics += (await readFile(paths[index])).replace(" ", "-").split(/\r?\n/);
