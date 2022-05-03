@@ -4,15 +4,15 @@ inputs:
   repo-token:
     description: 'Github token used to access github api with writing permissions. should be secrets.WRITING'
     required: true
-  path:
-    description: 'path to topics file'
+  paths:
+    description: 'path(s) to topics file'
     required: true
   replace-topics:
     description: 'Boolean to delete the old topics or to keep them'
     required: false
     default: false
   is-pom:
-    description: 'Boolean that describe the file is a pom'
+    description: 'Boolean that describe the file(s) is a pom'
     required: false
     default: false
 runs:

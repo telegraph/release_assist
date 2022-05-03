@@ -8510,50 +8510,9 @@ async function readFile(path) {
 }
 
 function cleanPom(pom) {
-    let content = getFromBetween.get(pom,"<artifactId>", "</artifactId>");
+    let content = "TO DO"
     return content;
 }
-
-var getFromBetween = {
-    results:[],
-    string:"",
-    getFromBetween:function (sub1,sub2) {
-        if(this.string.indexOf(sub1) < 0 || this.string.indexOf(sub2) < 0) return false;
-        var SP = this.string.indexOf(sub1)+sub1.length;
-        var string1 = this.string.substr(0,SP);
-        var string2 = this.string.substr(SP);
-        var TP = string1.length + string2.indexOf(sub2);
-        return this.string.substring(SP,TP);
-    },
-    removeFromBetween:function (sub1,sub2) {
-        if(this.string.indexOf(sub1) < 0 || this.string.indexOf(sub2) < 0) return false;
-        var removal = sub1+this.getFromBetween(sub1,sub2)+sub2;
-        this.string = this.string.replace(removal,"");
-    },
-    getAllResults:function (sub1,sub2) {
-        // first check to see if we do have both substrings
-        if(this.string.indexOf(sub1) < 0 || this.string.indexOf(sub2) < 0) return;
-
-        // find one result
-        var result = this.getFromBetween(sub1,sub2);
-        // push it to the results array
-        this.results.push(result);
-        // remove the most recently found one from the string
-        this.removeFromBetween(sub1,sub2);
-
-        // if there's more substrings
-        if(this.string.indexOf(sub1) > -1 && this.string.indexOf(sub2) > -1) {
-            this.getAllResults(sub1,sub2);
-        }
-        else return;
-    },
-    get:function (string,sub1,sub2) {
-        this.results = [];
-        this.string = string;
-        this.getAllResults(sub1,sub2);
-        return this.results;
-    }
-};
 
 module.exports.readFile = readFile;
 module.exports.cleanPom = cleanPom;
@@ -8773,19 +8732,22 @@ const { readFile } = __nccwpck_require__(4105);
 const { cleanPom } = __nccwpck_require__(4105);
 const { getTopics, addTopics, replaceTopics } = __nccwpck_require__(8493);
 
-const path = core.getInput('path');
+const paths = core.getInput('paths').split(" ");
 const replace = core.getInput('replace-topics');
 const isPom = core.getInput('is-pom');
 
 async function run() {
   try {
     core.info("Previous Topics: " + (await getTopics()).data.names);
-    let topics;
+    let topics = "";
     core.info("from POM?: " + isPom);
     if(isPom)
-      topics = cleanPom(readFile(path))
+      core.info("with POM -> TODO")
+      // topics = cleanPom(readFile(path))
     else
-      topics = (await readFile(path)).replace(" ", "-").split(/\r?\n/);
+      for (const path of paths) {
+        topics.add((await readFile(path)).replace(" ", "-").split(/\r?\n/));
+      }
     core.info("Topics to add: " + topics);
     core.info("replace: " + replace);
     if(replace)
