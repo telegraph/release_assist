@@ -20,7 +20,7 @@ async function run() {
         core.info("Reading path: " + paths[index]);
         let newTopics = (await readFile(paths[index])).replace(" ", "-").split(/\r?\n/);
         core.info("New Topics: " + newTopics);
-        topics = topics + "," + newTopics;
+        if(topics != "") topics = topics + "," + newTopics;
         // topics += (await readFile(paths[index])).replace(" ", "-").split(/\r?\n/);
       }
     core.info("Topics to add: " + topics);
