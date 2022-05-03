@@ -12,19 +12,22 @@ async function run() {
     core.info("Previous Topics: " + (await getTopics()).data.names);
     core.info("Paths: " + paths);
     let topics = [];
+    let topics2;
     core.info("from POM?: " + isPom);
     if(isPom == "true")
       core.info("with POM -> TODO")
       // topics = cleanPom(readFile(path))
     else
-      for (let index = 0; index < paths.length; index++)
+      for (let index = 0; index < paths.length; index++) {
         topics.push((await readFile(paths[index])).replace(" ", "-").split(/\r?\n/));
+        topics2 = (await readFile(paths[index])).replace(" ", "-").split(/\r?\n/);
+      }
     core.info("Topics to add: " + topics);
     core.info("replace: " + replace);
     if(replace)
-      await replaceTopics(topics.toString())
+      await replaceTopics(topics)
     else
-      await addTopics(topics.toString());
+      await addTopics(topics);
     core.info("Current Topics: " + (await getTopics()).data.names);
   } catch (error) {
       core.setFailed(error.message);
