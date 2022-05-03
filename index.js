@@ -17,7 +17,7 @@ async function run() {
     else
       for (let index = 0; index < paths.length; index++) {
         core.info("Reading path: " + paths[index]);
-        let topics = (await readFile(paths[index])).replace(" ", "-").split(/\r?\n/);
+        let topics = (await readFile(paths[index])).replace(" ", /\r?\n/).split(/\r?\n/);
         core.info("Topics: " + topics);
         if(replace == "true")
           await replaceTopics(topics);
