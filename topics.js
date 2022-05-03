@@ -28,6 +28,12 @@ async function addTopics(topics) {
   await replaceTopics(topicsToAdd);
 }
 
+async function removeAllTopics() {
+  core.info("Removing all topics...");
+  await replaceTopics([]);
+}
+
 module.exports.getTopics = getTopics;
 module.exports.addTopics = addTopics;
 module.exports.replaceTopics = replaceTopics;
+module.exports.removeAllTopics = removeAllTopics;

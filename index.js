@@ -10,14 +10,16 @@ const isPom = core.getInput('is-pom');
 async function run() {
   try {
     core.info("Previous Topics: " + (await getTopics()).data.names);
+    core.info("Paths: " + paths);
     let topics = [];
     core.info("from POM?: " + isPom);
     if(isPom)
       core.info("with POM -> TODO")
       // topics = cleanPom(readFile(path))
     else
-      for (const path of paths) {
-        topics.add((await readFile(path)).replace(" ", "-").split(/\r?\n/));
+      for (let path of paths) {
+        core.info("path: " + path);
+        topics.push((await readFile(path)).replace(" ", "-").split(/\r?\n/));
       }
     core.info("Topics to add: " + topics);
     core.info("replace: " + replace);
