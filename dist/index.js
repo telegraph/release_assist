@@ -8746,14 +8746,14 @@ async function run() {
   try {
     core.info("Previous Topics: " + (await getTopics()).data.names);
     core.info("Paths: " + paths);
-    let topics;
+    let topics = "";
     core.info("from POM?: " + isPom);
     if(isPom == "true")
       core.info("with POM -> TODO")
     else
       for (let index = 0; index < paths.length; index++) {
         core.info("Reading path: " + paths[index])
-        topics = topics + (await readFile(paths[index])).replace(" ", "-").split(/\r?\n/);
+        topics = topics + "," + (await readFile(paths[index])).replace(" ", "-").split(/\r?\n/);
         // topics.push((await readFile(paths[index])).replace(" ", "-").split(/\r?\n/));
       }
     core.info("Topics to add: " + topics);
