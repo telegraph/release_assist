@@ -8752,9 +8752,9 @@ async function run() {
       core.info("with POM -> TODO")
       // topics = cleanPom(readFile(path))
     else
-      for (let path of paths) {
-        core.info("path: " + path);
-        topics.push((await readFile(path)).replace(" ", "-").split(/\r?\n/));
+      for (let index = 0; index < paths.length; index++) {
+        core.info("path: " + paths[index]);
+        topics.push((await readFile(paths[index])).replace(" ", "-").split(/\r?\n/));
       }
     core.info("Topics to add: " + topics);
     core.info("replace: " + replace);
