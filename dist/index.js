@@ -8739,7 +8739,7 @@ const isPom = core.getInput('is-pom');
 async function run() {
   try {
     core.info("Previous Topics: " + (await getTopics()).data.names);
-    let topics = "";
+    let topics = [];
     core.info("from POM?: " + isPom);
     if(isPom)
       core.info("with POM -> TODO")
