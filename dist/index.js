@@ -8752,8 +8752,9 @@ async function run() {
       core.info("with POM -> TODO")
     else
       for (let index = 0; index < paths.length; index++) {
-        core.info("Reading path: " + paths[index])
-        topics = topics + (await readFile(paths[index])).replace(" ", "-").split(/\r?\n/);
+        core.info("Reading path: " + paths[index]);
+        topics.concat(topics, (await readFile(paths[index])).replace(" ", "-").split(/\r?\n/))
+        // topics += (await readFile(paths[index])).replace(" ", "-").split(/\r?\n/);
       }
     core.info("Topics to add: " + topics);
     core.info("replace: " + replace);
