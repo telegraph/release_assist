@@ -8746,29 +8746,20 @@ async function run() {
   try {
     core.info("Previous Topics: " + (await getTopics()).data.names);
     core.info("Paths: " + paths);
-    let topics = "";
     core.info("from POM?: " + isPom);
     if(isPom == "true")
       core.info("with POM -> TODO")
     else
       for (let index = 0; index < paths.length; index++) {
         core.info("Reading path: " + paths[index]);
-        let newTopics = (await readFile(paths[index])).replace(" ", "-").split(/\r?\n/);
-        core.info("New Topics: " + newTopics);
-        if(topics != "")
-          topics = topics + " " + newTopics;
+        let topics = (await readFile(paths[index])).replace(" ", "-").split(/\r?\n/);
+        core.info("Topics: " + topics);
+        if(replace == "true")
+          await replaceTopics(topics);
         else
-          topics = newTopics;
-        // topics += (await readFile(paths[index])).replace(" ", "-").split(/\r?\n/);
+          await addTopics(topics);
       }
-    core.info("Topics to add: " + topics);
     core.info("replace: " + replace);
-    if(replace == "true") {
-      await replaceTopics(topics)
-    }
-    else {
-      await addTopics(topics);
-    }
     core.info("Current Topics: " + (await getTopics()).data.names);
   } catch (error) {
       core.setFailed(error.message);
