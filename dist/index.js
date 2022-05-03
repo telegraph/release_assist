@@ -8753,7 +8753,9 @@ async function run() {
     else
       for (let index = 0; index < paths.length; index++) {
         core.info("Reading path: " + paths[index]);
-        topics.concat(topics, (await readFile(paths[index])).replace(" ", "-").split(/\r?\n/))
+        let newTopics = (await readFile(paths[index])).replace(" ", "-").split(/\r?\n/);
+        core.info("New Topics: " + newTopics);
+        topics += newTopics;
         // topics += (await readFile(paths[index])).replace(" ", "-").split(/\r?\n/);
       }
     core.info("Topics to add: " + topics);
