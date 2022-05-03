@@ -22,7 +22,8 @@ async function run() {
         topics2 = (await readFile(paths[index])).replace(" ", "-").split(/\r?\n/);
         // topics.push((await readFile(paths[index])).replace(" ", "-").split(/\r?\n/));
       }
-    core.info("Topics to add: " + topics);
+    core.info("Topics to add: " + topics2);
+    // core.info("Topics to add: " + topics);
     core.info("replace: " + replace);
     if(replace == "true") {
       await replaceTopics(topics2)
