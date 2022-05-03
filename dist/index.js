@@ -8748,7 +8748,7 @@ async function run() {
     core.info("Paths: " + paths);
     let topics = [];
     core.info("from POM?: " + isPom);
-    if(isPom)
+    if(isPom == "true")
       core.info("with POM -> TODO")
       // topics = cleanPom(readFile(path))
     else
