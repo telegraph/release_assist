@@ -8752,16 +8752,14 @@ async function run() {
       core.info("with POM -> TODO")
       // topics = cleanPom(readFile(path))
     else
-      for (let index = 0; index < paths.length; index++) {
-        core.info("path: " + paths[index]);
+      for (let index = 0; index < paths.length; index++)
         topics.push((await readFile(paths[index])).replace(" ", "-").split(/\r?\n/));
-      }
     core.info("Topics to add: " + topics);
     core.info("replace: " + replace);
     if(replace)
-      await replaceTopics(topics)
+      await replaceTopics(topics.toString())
     else
-      await addTopics(topics);
+      await addTopics(topics.toString());
     core.info("Current Topics: " + (await getTopics()).data.names);
   } catch (error) {
       core.setFailed(error.message);
