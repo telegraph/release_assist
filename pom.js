@@ -8,8 +8,8 @@ function cleanPom(xml) {
         //Extract the value from the data element
         extractedData = result['project']['dependencies'][0]['dependency'][0]['groupId'];
     });
-    core.info(" ~ POM Extracted Data 2 ~ ");
-    core.info(JSON.stringify(extractedData));
+    core.info(" ~ POM Extracted Data ~ ");
+    core.info(extractedData);
 
     // parser.parseStringPromise(data).then(function (result) {
     //     console.dir(result);
