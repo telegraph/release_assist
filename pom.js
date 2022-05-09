@@ -2,12 +2,11 @@ const core = require('@actions/core');
 const xml2js = require('xml2js');
 
 function cleanPom(xml) {
-    core.info("POM: " + xml);
     let extractedData;
     let parser = new xml2js.Parser();
     parser.parseString(xml, function(err,result){
         //Extract the value from the data element
-        extractedData = result['project']['repositories']['repository']['id'];
+        extractedData = result['project']['repositories']['repository'];
     });
     core.info(" ~ POM Extracted Data ~ ");
     core.info(extractedData);
