@@ -15343,7 +15343,7 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(452);
 const { readFile } = __nccwpck_require__(3206);
 const { cleanPom } = __nccwpck_require__(6760);
-const { getTopics, addTopics,removeAllTopics } = __nccwpck_require__(8493);
+const { getTopics, addTopics, removeAllTopics } = __nccwpck_require__(8493);
 
 const paths = core.getInput('paths').split(" ");
 const replace = core.getInput('replace');

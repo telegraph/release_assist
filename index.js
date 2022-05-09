@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const { readFile } = require('./file');
 const { cleanPom } = require('./pom');
-const { getTopics, addTopics,removeAllTopics } = require('./topics');
+const { getTopics, addTopics, removeAllTopics } = require('./topics');
 
 const paths = core.getInput('paths').split(" ");
 const replace = core.getInput('replace');

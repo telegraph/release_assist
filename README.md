@@ -8,6 +8,12 @@ $ npm install
 $ ncc build index.js --license licenses.txt
 ```
 
+# Test
+```
+$ npm test
+```
+N.B.: The tests are in the folder `/test`
+
 # Description
 
 This action adds topics on a repo reading from one or more files.
