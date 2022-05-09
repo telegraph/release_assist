@@ -1,6 +1,20 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 3206:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+const { promises: fs } = __nccwpck_require__(7147)
+
+async function readFile(path) {
+    let content = await fs.readFile(path, 'utf8')
+    return content;
+}
+
+module.exports.readFile = readFile;
+
+/***/ }),
+
 /***/ 4143:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -8499,22 +8513,18 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 4105:
+/***/ 6760:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-const { promises: fs } = __nccwpck_require__(7147)
-
-async function readFile(path) {
-    let content = await fs.readFile(path, 'utf8')
-    return content;
-}
+const core = __nccwpck_require__(452);
+const xml2js = __nccwpck_require__(3618);
 
 function cleanPom(pom) {
-    let content = "TO DO"
+    core.info("POM: " + pom);
+    let parser = new xml2js.parseFromString(pom, "text/xml");
     return content;
 }
 
-module.exports.readFile = readFile;
 module.exports.cleanPom = cleanPom;
 
 /***/ }),
@@ -8568,6 +8578,14 @@ module.exports.removeAllTopics = removeAllTopics;
 /***/ ((module) => {
 
 module.exports = eval("require")("encoding");
+
+
+/***/ }),
+
+/***/ 3618:
+/***/ ((module) => {
+
+module.exports = eval("require")("xml2js");
 
 
 /***/ }),
@@ -8734,8 +8752,8 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 const core = __nccwpck_require__(452);
-const { readFile } = __nccwpck_require__(4105);
-const { cleanPom } = __nccwpck_require__(4105);
+const { readFile } = __nccwpck_require__(3206);
+const { cleanPom } = __nccwpck_require__(6760);
 const { getTopics, addTopics, replaceTopics } = __nccwpck_require__(8493);
 
 const paths = core.getInput('paths').split(" ");
@@ -8747,19 +8765,23 @@ async function run() {
     core.info("Previous Topics: " + (await getTopics()).data.names);
     core.info("Paths: " + paths);
     core.info("from POM?: " + isPom);
-    if(isPom == "true")
-      core.info("with POM -> TODO")
-    else
-      for (let index = 0; index < paths.length; index++) {
-        core.info("Reading path: " + paths[index]);
-        let topics = (await readFile(paths[index])).replace(/ /g, '\r\n').split(/\r?\n/);
-        core.info("Topics: " + topics);
-        if(replace == "true")
-          await replaceTopics(topics);
-        else
-          await addTopics(topics);
+    for (let index = 0; index < paths.length; index++) {
+      core.info("Reading path: " + paths[index]);
+      let content = await readFile(paths[index]);
+      let topics;
+      if(isPom == "true") {
+        cleanPom(content);
+        core.info("with POM -> TODO");
       }
-    core.info("replace: " + replace);
+      else
+        // Replacing all spaces into new lines, then splitting by new lines
+        topics = content.replace(/ /g, '\r\n').split(/\r?\n/);
+      core.info("Topics: " + topics);
+      if(replace == "true")
+        await replaceTopics(topics);
+      else
+        await addTopics(topics);
+    }
     core.info("Current Topics: " + (await getTopics()).data.names);
   } catch (error) {
       core.setFailed(error.message);
