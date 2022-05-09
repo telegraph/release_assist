@@ -10,7 +10,8 @@ function cleanPom(xml) {
         dependencies = result['project']['dependencies'][0]['dependency'];
         for (let index = 0; index < paths.length; index++) {
             if(dependencies[index]["groupId"] == "uk.co.telegraph"){
-                artifacts.push(dependencies[index]["artifactId"])
+                artifacts.push(dependencies[index]["artifactId"]);
+                core.info("Added: " + dependencies[index]["artifactId"])
             }
         }
     });
