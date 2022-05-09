@@ -1,8 +1,8 @@
 const core = require('@actions/core');
 const xml2js = require('xml2js');
 
-function cleanPom(pom) {
-    core.info("POM: " + pom);
+function cleanPom(xml) {
+    core.info("POM: " + xml);
     let extractedData;
     let parser = new xml2js.Parser();
     parser.parseString(xml, function(err,result){

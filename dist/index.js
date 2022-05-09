@@ -15094,8 +15094,8 @@ function wrappy (fn, cb) {
 const core = __nccwpck_require__(452);
 const xml2js = __nccwpck_require__(1698);
 
-function cleanPom(pom) {
-    core.info("POM: " + pom);
+function cleanPom(xml) {
+    core.info("POM: " + xml);
     let extractedData;
     let parser = new xml2js.Parser();
     parser.parseString(xml, function(err,result){
