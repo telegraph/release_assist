@@ -9,6 +9,7 @@
 # Build 
 ```
 $ npm i -g @vercel/ncc  
+$ npm install xml2js 
 $ npm install
 $ ncc build index.js --license licenses.txt
 ```
