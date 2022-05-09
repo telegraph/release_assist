@@ -15365,8 +15365,8 @@ async function run() {
         // Replacing all spaces into new lines, then splitting by new lines
         topics = content.replace(/ /g, '\r\n').split(/\r?\n/);
       core.info("Topics: " + topics);
+      await addTopics(topics);
     }
-    await addTopics(topics);
     core.info("DONE. Current Topics: " + (await getTopics()).data.names);
   } catch (error) {
       core.setFailed(error.message);
