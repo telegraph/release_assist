@@ -15344,7 +15344,7 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(452);
 const { readFile } = __nccwpck_require__(3206);
 const { cleanPom } = __nccwpck_require__(6760);
-const { getTopics, removeAllTopics } = __nccwpck_require__(8493);
+const { getTopics, addTopics,removeAllTopics } = __nccwpck_require__(8493);
 
 const paths = core.getInput('paths').split(" ");
 const replace = core.getInput('replace-topics');
@@ -15352,13 +15352,13 @@ const isPom = core.getInput('is-pom');
 
 async function run() {
   try {
+    let topics;
     core.info("Previous Topics: " + (await getTopics()).data.names);
     if(replace == "true")
       await removeAllTopics();
     for (let index = 0; index < paths.length; index++) {
       core.info("Reading path: " + paths[index]);
       let content = await readFile(paths[index]);
-      let topics;
       if(isPom == "true")
         topics = cleanPom(await readFile(paths[index])).toString().split(",");
       else
@@ -15366,7 +15366,8 @@ async function run() {
         topics = content.replace(/ /g, '\r\n').split(/\r?\n/);
       core.info("Topics: " + topics);
     }
-    core.info("Current Topics: " + (await getTopics()).data.names);
+    await addTopics(topics);
+    core.info("DONE. Current Topics: " + (await getTopics()).data.names);
   } catch (error) {
       core.setFailed(error.message);
   }
