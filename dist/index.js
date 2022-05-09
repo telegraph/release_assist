@@ -15099,9 +15099,11 @@ function cleanPom(xml) {
     let parser = new xml2js.Parser();
     parser.parseString(xml, function(err,result){
         //Extract the value from the data element
-        extractedData = result['project']['repositories']['repository'];
+        extractedData = result['project']['dependencies']['dependency'];
+        core.info(" ~ POM Extracted Data 1 ~ ");
+        core.info(extractedData);
     });
-    core.info(" ~ POM Extracted Data ~ ");
+    core.info(" ~ POM Extracted Data 2 ~ ");
     core.info(extractedData);
 
     // parser.parseStringPromise(data).then(function (result) {
@@ -15365,7 +15367,7 @@ async function run() {
     for (let index = 0; index < paths.length; index++) {
       core.info("Reading path: " + paths[index]);
       let content = await readFile(paths[index]);
-      let topics;
+      let topics = "";
       if(isPom == "true") {
         cleanPom(content);
         core.info("with POM -> TODO");
