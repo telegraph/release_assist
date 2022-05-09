@@ -15098,7 +15098,6 @@ function cleanPom(xml) {
     let artifacts = [];
     let parser = new xml2js.Parser();
     parser.parseString(xml, function(err,result){
-        //Extract the value from the data element
         dependencies = result['project']['dependencies'][0]['dependency'];
         for (let index = 0; index < dependencies.length; index++)
             if(dependencies[index]["groupId"] == "uk.co.telegraph")
