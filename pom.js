@@ -7,7 +7,7 @@ function cleanPom(xml) {
     let parser = new xml2js.Parser();
     parser.parseString(xml, function(err,result){
         //Extract the value from the data element
-        extractedData = result['project']['repositories']['repository']['id'];
+        extractedData = result['project'];
     });
     core.info(" ~ POM Extracted Data ~ ");
     core.info(extractedData);
