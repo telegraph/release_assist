@@ -15100,7 +15100,7 @@ function cleanPom(xml) {
     parser.parseString(xml, function(err,result){
         //Extract the value from the data element
         // core.info(result['project']['dependencies']['dependency'][0]['groupId'].toString());
-        extractedData = result['project']['dependencies'];
+        extractedData = result['project']['dependencies'][0];
     });
     core.info(" ~ POM Extracted Data 2 ~ ");
     core.info(JSON.stringify(extractedData));
