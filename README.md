@@ -11,8 +11,8 @@ $ ncc build index.js --license licenses.txt
 # Description
 
 This action adds topics on a repo reading from one or more files.
-    * Those files can be .txt and the content will be considered as topics to add (considering spaces and the new lines as separators)
-    * Those files can be pom.xml(s), and the dependencies that belong to "uk.co.telegraph" will be added as topics
+- Those files can be .txt and the content will be considered as topics to add (considering spaces and the new lines as separators)
+- Those files can be pom.xml(s), and the dependencies that belong to "uk.co.telegraph" will be added as topics
 
 # Usage
 To use this action you need a file in your repository at the path `.github/workflows/update-topics.yaml`. Following the `steps` that the file should contain:
