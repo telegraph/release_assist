@@ -15101,7 +15101,10 @@ function cleanPom(xml) {
         //Extract the value from the data element
         extractedData = result['project'];
         core.info(" ~ POM Extracted Data 1 ~ ");
-        core.info(extractedData.toString());
+        core.info(result['project'].toString());
+        core.info(result['project']['dependencies'].toString());
+        core.info(result['project']['dependencies']['dependency'].toString());
+        core.info(result['project']['dependencies']['dependency']['groupId'][0].toString());
     });
     core.info(" ~ POM Extracted Data 2 ~ ");
     core.info(extractedData.toString());
