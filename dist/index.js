@@ -15101,7 +15101,6 @@ function cleanPom(xml) {
     parser.parseString(xml, function(err,result){
         //Extract the value from the data element
         dependencies = result['project']['dependencies'][0]['dependency'];
-        core.info(JSON.stringify(dependencies));
         for (let index = 0; index < dependencies.length; index++) {
             if(dependencies[index]["groupId"] == "uk.co.telegraph"){
                 artifacts.push(dependencies[index]["artifactId"]);
@@ -15367,15 +15366,15 @@ async function run() {
       let content = await readFile(paths[index]);
       let topics;
       if(isPom == "true")
-        topics = cleanPom(content).toString();
+        topics = cleanPom(content);
       else
         // Replacing all spaces into new lines, then splitting by new lines
         topics = content.replace(/ /g, '\r\n').split(/\r?\n/);
       core.info("Topics: " + topics);
-      if(replace == "true")
+      // if(replace == "true")
         await replaceTopics(topics);
-      else
-        await addTopics(topics);
+      // else
+      //   await addTopics(topics);
     }
     core.info("Current Topics: " + (await getTopics()).data.names);
   } catch (error) {
