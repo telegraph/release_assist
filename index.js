@@ -17,15 +17,15 @@ async function run() {
       let content = await readFile(paths[index]);
       let topics;
       if(isPom == "true")
-        topics = cleanPom(content);
+        topics = cleanPom(content).toString().split(",");
       else
         // Replacing all spaces into new lines, then splitting by new lines
         topics = content.replace(/ /g, '\r\n').split(/\r?\n/);
       core.info("Topics: " + topics);
-      // if(replace == "true")
+      if(replace == "true")
         await replaceTopics(topics);
-      // else
-      //   await addTopics(topics);
+      else
+        await addTopics(topics);
     }
     core.info("Current Topics: " + (await getTopics()).data.names);
   } catch (error) {
