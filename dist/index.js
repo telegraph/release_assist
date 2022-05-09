@@ -15091,7 +15091,6 @@ function wrappy (fn, cb) {
 /***/ 6760:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-const core = __nccwpck_require__(452);
 const xml2js = __nccwpck_require__(1698);
 
 function cleanPom(xml) {
@@ -15101,15 +15100,10 @@ function cleanPom(xml) {
     parser.parseString(xml, function(err,result){
         //Extract the value from the data element
         dependencies = result['project']['dependencies'][0]['dependency'];
-        for (let index = 0; index < dependencies.length; index++) {
-            if(dependencies[index]["groupId"] == "uk.co.telegraph"){
+        for (let index = 0; index < dependencies.length; index++)
+            if(dependencies[index]["groupId"] == "uk.co.telegraph")
                 artifacts.push(dependencies[index]["artifactId"]);
-                core.info("Added: " + dependencies[index]["artifactId"])
-            }
-        }
     });
-    core.info(" ~ POM Artifacts ~ ");
-    core.info(artifacts);
     return artifacts;
 }
 
