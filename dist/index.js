@@ -15347,7 +15347,7 @@ const { cleanPom } = __nccwpck_require__(6760);
 const { getTopics, addTopics,removeAllTopics } = __nccwpck_require__(8493);
 
 const paths = core.getInput('paths').split(" ");
-const replace = core.getInput('replace-topics');
+const replace = core.getInput('replace');
 const isPom = core.getInput('is-pom');
 
 async function run() {

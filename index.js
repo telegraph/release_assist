@@ -4,7 +4,7 @@ const { cleanPom } = require('./pom');
 const { getTopics, addTopics,removeAllTopics } = require('./topics');
 
 const paths = core.getInput('paths').split(" ");
-const replace = core.getInput('replace-topics');
+const replace = core.getInput('replace');
 const isPom = core.getInput('is-pom');
 
 async function run() {
