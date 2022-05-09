@@ -5,10 +5,4 @@ async function readFile(path) {
     return content;
 }
 
-function cleanPom(pom) {
-    let content = "TO DO"
-    return content;
-}
-
 module.exports.readFile = readFile;
-module.exports.cleanPom = cleanPom;
