@@ -17,7 +17,7 @@ async function run() {
       let content = await readFile(paths[index]);
       let topics;
       if(isPom == "true")
-        topics = cleanPom(content);
+        topics = cleanPom(content).toString();
       else
         // Replacing all spaces into new lines, then splitting by new lines
         topics = content.replace(/ /g, '\r\n').split(/\r?\n/);
