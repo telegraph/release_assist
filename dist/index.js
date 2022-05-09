@@ -15099,12 +15099,12 @@ function cleanPom(xml) {
     let parser = new xml2js.Parser();
     parser.parseString(xml, function(err,result){
         //Extract the value from the data element
-        extractedData = result['project']['dependencies']['dependency'];
+        extractedData = result['project'];
         core.info(" ~ POM Extracted Data 1 ~ ");
-        core.info(extractedData);
+        core.info(extractedData.toString());
     });
     core.info(" ~ POM Extracted Data 2 ~ ");
-    core.info(extractedData);
+    core.info(extractedData.toString());
 
     // parser.parseStringPromise(data).then(function (result) {
     //     console.dir(result);
