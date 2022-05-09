@@ -15,7 +15,7 @@ async function run() {
     for (let index = 0; index < paths.length; index++) {
       core.info("Reading path: " + paths[index]);
       let content = await readFile(paths[index]);
-      let topics = "";
+      let topics;
       if(isPom == "true") {
         cleanPom(content);
         core.info("with POM -> TODO");
