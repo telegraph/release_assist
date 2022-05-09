@@ -15096,14 +15096,14 @@ const xml2js = __nccwpck_require__(1698);
 
 function cleanPom(pom) {
     core.info("POM: " + pom);
+    let extractedData;
     let parser = new xml2js.Parser();
     parser.parseString(xml, function(err,result){
         //Extract the value from the data element
         extractedData = result['project']['repositories']['repository']['id'];
-        console.log(extractedData);
     });
-
-
+    core.info(" ~ POM Extracted Data ~ ");
+    core.info(extractedData);
 
     // parser.parseStringPromise(data).then(function (result) {
     //     console.dir(result);
@@ -15112,7 +15112,7 @@ function cleanPom(pom) {
     //     .catch(function (err) {
     //         // Failed
     //     });
-    return content;
+    return extractedData;
 }
 
 module.exports.cleanPom = cleanPom;
