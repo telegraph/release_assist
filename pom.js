@@ -8,7 +8,7 @@ function cleanPom(xml) {
         //Extract the value from the data element
         extractedData = result['project'];
         core.info(" ~ POM Extracted Data 1 ~ ");
-        core.info(result['project']['dependencies']['dependency'][0]['groupId'][0].toString());
+        core.info(result['project']['dependencies']['dependency'][0]['groupId'].toString());
     });
     core.info(" ~ POM Extracted Data 2 ~ ");
     core.info(extractedData.toString());
