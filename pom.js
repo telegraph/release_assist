@@ -10,7 +10,7 @@ function cleanPom(xml) {
         for (let index = 0; index < dependencies.length; index++)
             if(dependencies[index]["groupId"] == "uk.co.telegraph") {
                 artifacts.push(dependencies[index]["artifactId"]);
-                let version = dependencies[index]["version"];
+                let version = dependencies[index]["version"] + "";
                 core.info("--- version:");
                 core.info(version);
                 if(version)
