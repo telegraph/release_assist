@@ -15092,6 +15092,7 @@ function wrappy (fn, cb) {
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 const xml2js = __nccwpck_require__(1698);
+const core = __nccwpck_require__(452);
 
 function cleanPom(xml) {
     let dependencies;
@@ -15103,8 +15104,10 @@ function cleanPom(xml) {
             if(dependencies[index]["groupId"] == "uk.co.telegraph") {
                 artifacts.push(dependencies[index]["artifactId"]);
                 let version = dependencies[index]["version"];
+                core.info("--- version:");
+                core.info(version);
                 if(version)
-                    artifacts.push(dependencies[index]["artifactId"] + "-" + version.replaceAll(".","_"));
+                    artifacts.push(dependencies[index]["artifactId"] + "_" + version.replace(/\./,"-"));
             }
     });
     return artifacts;

@@ -1,4 +1,5 @@
 const xml2js = require('xml2js');
+const core = require('@actions/core');
 
 function cleanPom(xml) {
     let dependencies;
@@ -10,8 +11,10 @@ function cleanPom(xml) {
             if(dependencies[index]["groupId"] == "uk.co.telegraph") {
                 artifacts.push(dependencies[index]["artifactId"]);
                 let version = dependencies[index]["version"];
+                core.info("--- version:");
+                core.info(version);
                 if(version)
-                    artifacts.push(dependencies[index]["artifactId"] + "-" + version.replaceAll(".","_"));
+                    artifacts.push(dependencies[index]["artifactId"] + "_" + version.replace(/\./,"-"));
             }
     });
     return artifacts;
