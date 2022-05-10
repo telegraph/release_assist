@@ -15358,11 +15358,11 @@ const isPom = core.getInput('is-pom');
 
 async function run() {
   try {
-    let topics;
     core.info("Previous Topics: " + (await getTopics()).data.names);
     if(replace == "true")
       await removeAllTopics();
     for (let index = 0; index < paths.length; index++) {
+      let topics = [];
       core.info("Reading path: " + paths[index]);
       let content = await readFile(paths[index]);
       if(isPom == "true")
