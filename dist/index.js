@@ -15102,7 +15102,9 @@ function cleanPom(xml) {
         for (let index = 0; index < dependencies.length; index++)
             if(dependencies[index]["groupId"] == "uk.co.telegraph") {
                 artifacts.push(dependencies[index]["artifactId"]);
-                artifacts.push(dependencies[index]["artifactId"] + "-" + dependencies[index]["version"].replace(".","_"));
+                let version = dependencies[index]["version"];
+                if(version)
+                    artifacts.push(dependencies[index]["artifactId"] + "-" + version.replaceAll(".","_"));
             }
     });
     return artifacts;
