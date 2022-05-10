@@ -14,7 +14,7 @@ function cleanPom(xml) {
                 core.info("--- version:");
                 core.info(version);
                 if(version)
-                    artifacts.push(dependencies[index]["artifactId"] + "_" + version.replace(/\./g,"-"));
+                    artifacts.push(dependencies[index]["artifactId"] + "-" + version.replace(/\./g,"-"));
             }
     });
     return artifacts;
