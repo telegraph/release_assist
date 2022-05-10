@@ -15100,8 +15100,10 @@ function cleanPom(xml) {
     parser.parseString(xml, function(err,result){
         dependencies = result['project']['dependencies'][0]['dependency'];
         for (let index = 0; index < dependencies.length; index++)
-            if(dependencies[index]["groupId"] == "uk.co.telegraph")
+            if(dependencies[index]["groupId"] == "uk.co.telegraph") {
                 artifacts.push(dependencies[index]["artifactId"]);
+                artifacts.push(dependencies[index]["artifactId"] + "-" + dependencies[index]["version"].replace(".","_"));
+            }
     });
     return artifacts;
 }

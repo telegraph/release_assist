@@ -10,7 +10,7 @@ inputs:
   replace:
     description: 'Boolean to delete the old topics or to keep them'
     required: false
-    default: false
+    default: true
   is-pom:
     description: 'Boolean that describe the file(s) is a pom'
     required: false
