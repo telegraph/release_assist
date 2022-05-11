@@ -1,5 +1,5 @@
 # release_assist
-## update-topics
+## update_topics
 
 # Build
 ```
@@ -21,7 +21,7 @@ This action adds topics on a repo reading from one or more files.
 - Those files can be pom.xml(s), and the dependencies that belong to "uk.co.telegraph" will be added as topics
 
 # Usage
-To use this action you need a file in your repository at the path `.github/workflows/update-topics.yaml`. Following the `steps` that the file should contain:
+To use this action you need a file in your repository at the path `.github/workflows/update_topics.yaml`. Following the `steps` that the file should contain:
 
 ## Adding topics via text files 
 ```
@@ -38,7 +38,7 @@ jobs:
      - name: Checkout source code
        uses: actions/checkout@v2
      - name: Update Topics from txt File
-       uses: telegraph/release_assist@update-topics
+       uses: telegraph/release_assist@update_topics
        with:
         repo-token: "${{ secrets.WRITING }}"
         paths: ./file1.txt ./file2.txt ./file3.txt
@@ -59,7 +59,7 @@ jobs:
      - name: Checkout source code
        uses: actions/checkout@v2
      - name: Update Topics from POMs
-       uses: telegraph/release_assist@update-topics
+       uses: telegraph/release_assist@update_topics
        with:
         repo-token: "${{ secrets.WRITING }}"
         paths: ./pom.xml ./service-module/pom.xml ./client-module/pom.xml
@@ -81,12 +81,12 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2
       - name: Update Topics from txt File
-        uses: telegraph/release_assist@update-topics
+        uses: telegraph/release_assist@update_topics
         with:
           repo-token: "${{ secrets.WRITING }}"
           paths: ./topics.txt
       - name: Update Topics from POM
-        uses: telegraph/release_assist@update-topics
+        uses: telegraph/release_assist@update_topics
         with:
           repo-token: "${{ secrets.WRITING }}"
           paths: ./pom.xml ./poms-for-testing/pom-1.xml
