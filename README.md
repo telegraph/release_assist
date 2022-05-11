@@ -25,45 +25,73 @@ To use this action you need a file in your repository at the path `.github/workf
 
 ## Adding topics via text files 
 ```
-steps:
- - name: Checkout source code
-   uses: actions/checkout@v2
- - name: Update Topics from txt File
-   uses: telegraph/release_assist@update-topics
-   with:
-    repo-token: "${{ secrets.WRITING }}"
-    paths: ./file1.txt ./file2.txt ./file3.txt
+name: Update Topics
+on:
+  push:
+    branches:
+      - main
+jobs:
+  add_topics:
+    runs-on: ubuntu-latest
+    name: Update topics from File
+    steps:
+     - name: Checkout source code
+       uses: actions/checkout@v2
+     - name: Update Topics from txt File
+       uses: telegraph/release_assist@update-topics
+       with:
+        repo-token: "${{ secrets.WRITING }}"
+        paths: ./file1.txt ./file2.txt ./file3.txt
 ```
 
 ## Adding topics via poms
 ```
-steps:
- - name: Checkout source code
-   uses: actions/checkout@v2
- - name: Update Topics from POMs
-    uses: telegraph/release_assist@update-topics
-    with:
-     repo-token: "${{ secrets.WRITING }}"
-     paths: ./pom.xml ./service-module/pom.xml ./client-module/pom.xml
-     is-pom: true
+name: Update Topics
+on:
+  push:
+    branches:
+      - main
+jobs:
+  add_topics:
+    runs-on: ubuntu-latest
+    name: Update topics from File
+    steps:
+     - name: Checkout source code
+       uses: actions/checkout@v2
+     - name: Update Topics from POMs
+       uses: telegraph/release_assist@update-topics
+       with:
+        repo-token: "${{ secrets.WRITING }}"
+        paths: ./pom.xml ./service-module/pom.xml ./client-module/pom.xml
+        is-pom: true
 ```
 
 ## Adding via pom(s) and text file(s)
 ```
-steps:
- - name: Checkout source code
-   uses: actions/checkout@v2
- - name: Update Topics from POMs
-    uses: telegraph/release_assist@update-topics
-    with:
-     repo-token: "${{ secrets.WRITING }}"
-     paths: ./pom.xml ./service-module/pom.xml ./client-module/pom.xml
-     is-pom: true
- - name: Update Topics from txt File
-    uses: telegraph/release_assist@update-topics
-    with:
-     repo-token: "${{ secrets.WRITING }}"
-     paths: ./file1.txt ./file2.txt ./file3.txt
+name: Update Topics
+on:
+  push:
+    branches:
+      - main
+jobs:
+  add_topics:
+    runs-on: ubuntu-latest
+    name: Update topics from File(s)
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+      - name: Update Topics from txt File
+        uses: telegraph/release_assist@update-topics
+        with:
+          repo-token: "${{ secrets.WRITING }}"
+          paths: ./topics.txt
+      - name: Update Topics from POM
+        uses: telegraph/release_assist@update-topics
+        with:
+          repo-token: "${{ secrets.WRITING }}"
+          paths: ./pom.xml ./poms-for-testing/pom-1.xml
+          is-pom: true
+          replace: false
 ```
 
 ## Inputs
