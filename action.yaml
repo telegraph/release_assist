@@ -8,11 +8,11 @@ inputs:
     description: 'path(s) to topics file'
     required: true
   replace:
-    description: 'Boolean to delete the old topics or to keep them'
+    description: 'Variable to delete the old topics or to keep them'
     required: false
     default: true
   is-pom:
-    description: 'Boolean that describe the file(s) is a pom'
+    description: 'Variable that describe if the paths are poms'
     required: false
     default: false
 runs:
