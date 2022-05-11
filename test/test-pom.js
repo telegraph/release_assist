@@ -14,7 +14,6 @@ describe('Testing POM cleaning', function() {
                 "<dependency>" +
                     "<groupId>uk.co.telegraph</groupId>" +
                     "<artifactId>tmg-test</artifactId>" +
-                    "<version>0.0.0</version>" +
                 "</dependency>" +
                 "<dependency>" +
                     "<groupId>some.other.company</groupId>" +
@@ -23,7 +22,6 @@ describe('Testing POM cleaning', function() {
                 "</dependency>" +
             "</dependencies></project>";
         let result = cleanPom(pom);
-        assert.equal("tmg-model", result[0]);
-        assert.equal("tmg-test", result[1]);
+        assert.equal("tmg-model,tmg-model-0-0-0,tmg-test", result.toString());
     })
 })
