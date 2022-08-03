@@ -1,4 +1,5 @@
 const xml2js = require('xml2js');
+const core = require('@actions/core');
 
 function cleanPom(xml) {
     let dependencies;
