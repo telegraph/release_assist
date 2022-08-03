@@ -2,7 +2,7 @@ name: 'Update topics'
 description: 'Updates topics reading from file'
 inputs:
   repo-token:
-    description: 'Github token used to access github api with writing permissions. Use "${{ secrets.ACTIONS_READING_AND_WRITING }}"'
+    description: 'Github token used to access github api with writing permissions. Use secrets.ACTIONS_READING_AND_WRITING'
     required: true
   paths:
     description: 'path(s) to topics file'
