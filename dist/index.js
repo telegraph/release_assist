@@ -15147,7 +15147,7 @@ async function addTopics(topics) {
   let topicsToAdd = "";
   for(let name of names){
     if(name != null && name != "")
-      topicsToAdd += name;
+      topicsToAdd.push(name);
   }
   await replaceTopics(topicsToAdd);
 }
