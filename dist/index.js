@@ -15108,7 +15108,7 @@ function cleanPom(xml) {
                     core.info("Version in POM: " + version);
                     if (version.toString().startsWith("$")) {
                         core.info("Version is stored in Properties");
-                        let variable_name = version.toString().slice(2, version.length-1).replace(/ /g,"");
+                        let variable_name = version.toString().replace("${","").replace("}","");
                         core.info("Property Name: " + variable_name);
                         version = result['project']['properties'][0][variable_name];
                         core.info("Version: " + version);
