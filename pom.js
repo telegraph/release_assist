@@ -17,7 +17,7 @@ function cleanPom(xml) {
                         core.info("Version is stored in Properties");
                         let variable_name = version.toString().slice(2, version.length-1).replace(/ /g,"");
                         core.info("Property Name: " + variable_name);
-                        version = result['properties']['properties'][0][variable_name];
+                        version = result['properties'][0][variable_name];
                         core.info("Version: " + version);
                     }
                     artifacts.push(dependencies[index]["artifactId"] + "-" + version.toString().replace(/\./g, "-"));
