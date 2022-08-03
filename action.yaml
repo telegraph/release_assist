@@ -6,7 +6,8 @@ inputs:
     required: true
   paths:
     description: 'path(s) to topics file'
-    required: true
+    required: false
+    default: ""
   replace:
     description: 'Variable to delete the old topics or to keep them'
     required: false

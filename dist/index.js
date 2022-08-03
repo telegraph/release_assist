@@ -15364,11 +15364,16 @@ const { readFile } = __nccwpck_require__(4428);
 const { cleanPom } = __nccwpck_require__(9924);
 const { getTopics, addTopics, removeAllTopics } = __nccwpck_require__(6866);
 
-const paths = core.getInput('paths').split(" ");
+const paths = core.getInput('paths');
 const replace = core.getInput('replace');
 const isPom = core.getInput('is-pom');
 
 async function run() {
+  if(paths === null || paths=="") {
+    paths = [];
+  } else {
+    paths = paths.split(" ");
+  }
   try {
     core.info("Previous Topics: " + (await getTopics()).data.names);
     if(replace == "true")
@@ -15382,6 +15387,9 @@ async function run() {
       else
         // Replacing all spaces into new lines, then splitting by new lines
         topics = content.replace(/ /g, '\r\n').split(/\r?\n/);
+      if(topics[topics.length-1] == ','){
+        topics = topics.slice(0, topics.length-1);
+      }
       core.info("Topics: " + topics);
       await addTopics(topics);
     }
