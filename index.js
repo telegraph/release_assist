@@ -3,16 +3,16 @@ const { readFile } = require('./file');
 const { cleanPom } = require('./pom');
 const { getTopics, addTopics, removeAllTopics } = require('./topics');
 
-const paths = core.getInput('paths');
+const paths = core.getInput('paths').split(" ");
 const replace = core.getInput('replace');
 const isPom = core.getInput('is-pom');
 
 async function run() {
-  if(paths === null || paths=="") {
-    paths = [];
-  } else {
-    paths = paths.split(" ");
-  }
+  // if(paths === null || paths=="") {
+  //   paths = [];
+  // } else {
+  //   paths = paths.split(" ");
+  // }
   try {
     core.info("Previous Topics: " + (await getTopics()).data.names);
     if(replace == "true")
