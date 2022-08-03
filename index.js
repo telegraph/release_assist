@@ -21,9 +21,6 @@ async function run() {
       else
         // Replacing all spaces into new lines, then splitting by new lines
         topics = content.replace(/ /g, '\r\n').split(/\r?\n/);
-      if(topics[topics.length-1] == ','){
-        topics = topics.slice(0, topics.length-1);
-      }
       core.info("Topics: " + topics);
       await addTopics(topics);
     }

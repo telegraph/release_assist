@@ -15144,6 +15144,9 @@ async function replaceTopics(names) {
 async function addTopics(topics) {
   const oldTopics = await getTopics();
   let topicsToAdd = oldTopics.data.names.concat(topics);
+  if(topicsToAdd[topicsToAdd.length-1] == ','){
+    topicsToAdd = topicsToAdd.slice(0, topicsToAdd.length-1);
+  }
   await replaceTopics(topicsToAdd);
 }
 
@@ -15368,9 +15371,6 @@ async function run() {
       else
         // Replacing all spaces into new lines, then splitting by new lines
         topics = content.replace(/ /g, '\r\n').split(/\r?\n/);
-      if(topics[topics.length-1] == ','){
-        topics = topics.slice(0, topics.length-1);
-      }
       core.info("Topics: " + topics);
       await addTopics(topics);
     }
