@@ -15106,7 +15106,7 @@ function cleanPom(xml) {
                 let version = dependencies[index]["version"];
                 if (version) {
                     core.info("Version in POM: " + version);
-                    if (version[0] == '$') {
+                    if (version[0] == '\$') {
                         core.info("Version is stored in Properties");
                         let variable_name = str.slice(2, str.length-1).replace(/ /g,"");
                         core.info("Property Name: " + variable_name);
