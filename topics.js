@@ -24,9 +24,11 @@ async function replaceTopics(names) {
 
 async function addTopics(topics) {
   const oldTopics = await getTopics();
-  let topicsToAdd = oldTopics.data.names.concat(topics);
-  if(topicsToAdd[topicsToAdd.length-1] == ','){
-    topicsToAdd = topicsToAdd.slice(0, topicsToAdd.length-1);
+  let names = oldTopics.data.names.concat(topics);
+  let topicsToAdd;
+  for(let name of names){
+    if(name != null && name != "")
+      topicsToAdd += name;
   }
   await replaceTopics(topicsToAdd);
 }
