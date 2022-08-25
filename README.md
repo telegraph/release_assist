@@ -40,7 +40,7 @@ jobs:
      - name: Update Topics from txt File
        uses: telegraph/release_assist@update_topics
        with:
-        repo-token: "${{ secrets.WRITING }}"
+        repo-token: "${{ secrets.ACTIONS_READING_AND_WRITING }}"
         paths: ./file1.txt ./file2.txt ./file3.txt
 ```
 
@@ -124,12 +124,12 @@ jobs:
       - name: Update Topics from txt File
         uses: telegraph/release_assist@update_topics
         with:
-          repo-token: "${{ secrets.WRITING }}"
+          repo-token: "${{ secrets.ACTIONS_READING_AND_WRITING }}"
           paths: ./topics.txt
       - name: Update Topics from POM
         uses: telegraph/release_assist@update_topics
         with:
-          repo-token: "${{ secrets.WRITING }}"
+          repo-token: "${{ secrets.ACTIONS_READING_AND_WRITING }}"
           paths: ./pom.xml ./api-module/pom.xml ./service-module/pom.xml ./client-module/pom.xml
           is-pom: true
           replace: false
