@@ -32,7 +32,7 @@ async function updatePullRequest(releaseVersionNumber, releaseNotes) {
 
  ## Risk: (High/Medium/Low)
   - High: if the changes can't be tested/are not backwards compatible or the probability to create issues is high
-  - Medium: if the changes have been tested and everthing works in preprod
+  - Medium: if the changes have been tested and everything works in preprod
   - Low: if the changes do not affect functionality (tests, docs, chore)
 
  ## Impact: (High/Medium/Low)
